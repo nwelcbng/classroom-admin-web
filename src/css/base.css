@@ -1,0 +1,63 @@
+/* 清除原始的间距 */
+* {
+    margin: 0;
+    padding: 0;
+}
+/* 设置基础字体及格式 */
+body {
+    font: 16px/1.5 "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei",
+    "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+    color: #333;
+
+}
+html{
+    height: 100%;
+    width: 100%;
+}
+/* 清除标签前面的小圆点 */
+ul,ol {
+    list-style: none;
+}
+/* 清除倾斜标签的倾斜效果 */
+em,i {
+    font-style: normal;
+}
+/* 清除a标签的下划线  */
+a {
+    text-decoration: none;
+    color: #333;
+}
+img {
+    vertical-align: middle;
+  }
+  
+  /* 去除input默认样式 */
+input {
+    border: none;
+    outline: none;
+    color: #333;
+  }
+  
+  /* 左浮动 */
+.fl {
+    float: left;
+  }
+  
+  /* 右浮动 */
+.fr {
+    float: right;
+  }
+  
+  /* 双伪元素清除法 */
+.clearfix::before,
+.clearfix::after {
+    content: "";
+    display: table;
+  }
+.clearfix::after {
+    clear: both;
+  }
+  
+.italic{
+    font-style: italic;
+}

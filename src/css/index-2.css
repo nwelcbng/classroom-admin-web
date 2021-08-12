@@ -1,0 +1,69 @@
+
+body {
+    background-image: linear-gradient(125deg,#fab1a0,
+    #ffeaa7,#55efc4,#81ecec,#74b9ff,#a29bfe);
+    background-size: 500%;
+    animation: slide 20s infinite;
+}
+@keyframes slide {
+    0%{
+        background-position: 0% 0%;
+    }
+    25%{
+        background-position: 75% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    75%{
+        background-position: 50% 100%;
+    }
+    100%{
+        background-position: 0% 0%;
+    }
+}
+.title{
+    margin-top: 50px;
+    font-size: 50px;
+    text-align: center;
+    color: #ffffff99;
+
+}
+.cards{
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-around;
+}
+.card{
+    position: relative;
+    height: 300px;
+    width: 450px;
+    background-color: rgb(252, 181, 100);
+}
+.envelope {
+    position: absolute;
+    height: 300px;
+    width: 450px; 
+    border-top: 150px transparent solid;
+    border-right: 225px rgb(250, 200, 144) solid;
+    border-bottom: 150px rgb(250, 200, 144) solid;
+    border-left: 225px rgb(250, 200, 144) solid;
+    box-sizing: border-box;
+}
+.envelope-top {
+    position: absolute;
+    height: 300px;
+    width: 450px; 
+    border-top: 150px rgb(251, 215, 173) solid;
+    border-right: 225px transparent solid;
+    border-bottom: 150px transparent solid;
+    border-left: 225px transparent solid;
+    box-sizing: border-box;
+}
+.paper {
+    position: absolute;
+    right: 25px;
+    height: 300px;
+    width: 400px; 
+    background-color: #fff;
+}
