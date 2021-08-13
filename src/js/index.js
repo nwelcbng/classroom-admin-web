@@ -24,6 +24,7 @@ visBtn.on("animationstart",function(){
     changing=true;
     visBtn.removeClass("card-center-btn-hover");
     text.removeClass("btn-text-hover");
+    makeQR("testtesttest");
 });
 visBtn.on('click',()=>{
     console.log("btn click");
@@ -43,6 +44,35 @@ visBtn.on("animationend",function(){
         visBtn.removeClass("expendbtn");
         visBtn.addClass("card-center-btn:hover");
         changing=false;
+        
+        simulation();
     },2000);
     
 });
+function changeStatus(txt){
+    var status=$(".status");
+    // console.log(status);
+    status.text(txt);
+}
+function simulation(){
+    setTimeout(()=>{
+        changeStatus("确认中");
+        console.log("ok?");
+    },2000);
+    setTimeout(()=>{
+        changeStatus("登录成功");
+        console.log("ok!");
+        var goBtn=$(".go");
+        goBtn.removeClass("hide");
+    },3000);
+}
+function makeQR(str){
+    console.log("making qrcode");
+    $("#qrcode").qrcode({
+        render:"table",
+        width:200,
+        height:200,
+        text: str
+    });
+    console.log("done");
+}
