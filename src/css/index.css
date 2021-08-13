@@ -25,6 +25,7 @@ body {
 .title{
     margin-top: 50px;
     font-size: 50px;
+    letter-spacing: 10px;
     text-align: center;
     color: #ffffff99;
 
@@ -33,6 +34,12 @@ body {
     margin-top: 80px;
     display: flex;
     justify-content: space-around;
+}
+.out-card{
+    position: relative;
+    height: 400px;
+    width: 350px;
+    /* background-color: red; */
 }
 .card{
     position: relative;
@@ -45,9 +52,101 @@ body {
     box-shadow:  20px 20px 60px #bebebe99;
     
 }
-.card-title {
-    margin-top: 10px;
+.card-center-btn{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(235, 233, 233, 0.424);
+    /* -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); */
+    border-radius: 50%;
+    box-shadow:  5px 5px 6px #bebebe99;
+}
+/* 这里不用伪类是因为在动画开始的时候要取消伪类的样式 js做不到 */
+.card-center-btn-hover{
+    cursor:pointer;
+    transform: translate(-51%,-51%);
+    box-shadow:  8px 8px 10px #bebebe99;
+}
+/* 按钮扩张成卡片的动画样式组 */
+.expendbtn{
+    animation: expending 3s forwards;
+}
+@keyframes expending {
+    to{
+        height: 400px;
+        width: 350px;
+        background-color: rgba(255, 255, 255,.3);
+        border-radius: 10%;
+        box-shadow:  20px 20px 60px #bebebe99;
+        color: #7a737499;
+        text-align: center;
+        
+    }
+}
+
+.btn-text{
+    position: absolute;
+    width: 350px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    font-size: 30px;
+    color: #00000063;
+    font-weight: 800;
+    letter-spacing: 5px; 
+    
+    
+}
+
+.btn-text-hover{
+    cursor:pointer;
+    transform: translate(-51%,-51%);
+}
+/* 按钮文字上移成标题的动画样式组 */
+.movetitle{
+    animation: moving 3s forwards;
+}
+@keyframes moving {
+    to{
+        top: 5%;
+        color: #7a737499;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing:1px;
+    }
+}
+.desc {
+    margin: 40px 5px;
     color: #7a737499;
     text-align: center;
-    font-size: 20px;
+    font-size: 25px;
+    font-weight: 400;
+    letter-spacing:1px;
+}
+.wx-applet{
+    color: #7a737499;
+    text-decoration: underline;
+}
+/* 小程序二维码 hover状态显示 */
+.wx-applet-QR{
+    position: absolute;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform:  translate(-50%,-30%);
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    background: url("../img/wx-applet-QR.png") no-repeat;
+    background-size: 100% 100%;
+}
+.wx-applet:hover+.wx-applet-QR{
+    
+    opacity: 1;
 }
