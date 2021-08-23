@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../iconfont/iconfont.css">
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/jquery.qrcode.min.js"></script>
-    <script src="../js/qrcode.js"></script>
+    <script src="../js/include/jquery.min.js"></script>
+    <script src="../js/include/jquery.qrcode.min.js"></script>
+    <script src="../js/include/qrcode.js"></script>
 </head>
 <body>
     <div class="title"> <span class="italic">GDUTELC</span>  -  干事招新报名系统</div>
@@ -18,8 +18,8 @@
         <div class="out-card">
             <div class="visitor card clearfix hide">
                <div class="desc">请打开 <a href="#" class="wx-applet">报名小程序</a>
-                ，在报名页扫描下方二维码登录
-                <div class="wx-applet-QR"></div>
+                    ，在报名页扫描下方二维码登录
+                    <div class="wx-applet-QR"></div>
                </div>
                 <div class="wx-logincode" id="qrcode"></div>
                 <span class="status">等待扫描</span>
@@ -29,11 +29,17 @@
             <p class="visitor-btn-text btn-text">干事报名</p>
         </div>
         <div class="out-card">
-            <div class="admin card clearfix">
-                
+            <div class="admin card clearfix hide">
+                <div class="other">
+                    test
+                    test
+                    占位
+                    test
+                    test
+                </div>
             </div>
             <button class="admin-btn card-center-btn "></button>
-            <p class="btn-text">干事报名</p>
+            <p class="admin-btn-text btn-text">审核入口</p>
         </div>
         
     </div>
