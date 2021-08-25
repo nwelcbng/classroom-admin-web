@@ -30,24 +30,24 @@ a {
 img {
     vertical-align: middle;
   }
-  
+
   /* 去除input默认样式 */
 button,input {
     border: none;
     outline: none;
     color: #333;
   }
-  
+
   /* 左浮动 */
 .fl {
     float: left;
   }
-  
+
   /* 右浮动 */
 .fr {
     float: right;
   }
-  
+
   /* 双伪元素清除法 */
 .clearfix::before,
 .clearfix::after {
@@ -57,7 +57,7 @@ button,input {
 .clearfix::after {
     clear: both;
   }
-  
+
 .italic{
     font-style: italic;
 }

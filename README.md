@@ -1,14 +1,26 @@
 # SNP-Web
 电协报名系统-Web端
 
+
 **正在爆肝&学习中。。。**
 
 ### 8.23记录
-- **此版本已弃用，准备用Vue重构并继续开发**
+- 使用vue进行了初步重构
 
-### 8.12记录
-- 搭建了网页入口
-  
+## 初始化
+```
+npm install
+```
 
-    > index-2是信封效果 index为毛玻璃效果 信封效果想做成点击之后展开信封弹出信纸，信纸上填写登录信息的，但是信封做出来感觉emmm丑。于是改为毛玻璃
+### 运行开发环境
+```
+npm run serve
+```
 
+### 项目生成
+```
+npm run build
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
