@@ -6,15 +6,8 @@
         enter-class="card-enter"
         enter-active-class="card-enter-active"
       >
-        <div class="visitor card clearfix" v-if="!cardHide">
-          <div class="desc">
-            请打开 <a href="#" class="wx-applet">报名小程序</a>
-            ，在报名页扫描下方二维码登录
-            <div class="wx-applet-QR"></div>
-          </div>
-          <div class="wx-logincode" id="qrcode"></div>
-          <span class="status">等待扫描</span>
-          <button class="go iconfont icon-jinru hide"></button>
+        <div class="card clearfix" v-if="!cardHide">
+          <slot></slot>
         </div>
       </transition>
 
@@ -35,7 +28,7 @@
         @mouseenter="btnMouseEnter"
         @mouseleave="btnMouseLeave"
       >
-        干事报名
+        {{contentTitle}}
       </p>
     </div>
   </div>
@@ -44,6 +37,9 @@
 <script>
 export default {
   name: "Card",
+  props:{
+    contentTitle:String
+  },
   data() {
     return {
       onAnima: false,
@@ -83,7 +79,8 @@ export default {
       this.moveTitle = true;
       this.btnHide = true;
       this.cardHide = false;
-    }
+      this.$emit("getUUID");//通知父组件获取uuid
+    },
   },
 };
 </script>
@@ -133,25 +130,12 @@ export default {
   opacity: 0;
 }
 .card-enter-active {
-  /* animation: movingg 3s; */
-  /* animation-delay: 1.5s; */
   transition: opacity 1.5s;
   transition-delay: 1.5s;
 }
-@keyframes movingg {
-  100% {
-    opacity: 1;
-  }
-}
-
 
 /* 一般样式 */
-.out-card {
-  position: relative;
-  height: 400px;
-  width: 350px;
-  /* background-color: red; */
-}
+
 .card {
   position: relative;
   height: 400px;
@@ -162,6 +146,13 @@ export default {
   border-radius: 10%;
   box-shadow: 20px 20px 60px #bebebe99;
 }
+.out-card {
+  position: relative;
+  height: 400px;
+  width: 350px;
+  /* background-color: red; */
+}
+
 .card-center-btn {
   position: absolute;
   width: 200px;
@@ -199,74 +190,4 @@ export default {
   cursor: pointer;
   transform: translate(-51%, -51%);
 }
-
-.visitor .desc {
-  margin: 40px 5px;
-  color: #7a737499;
-  text-align: center;
-  font-size: 25px;
-  font-weight: 400;
-  letter-spacing: 1px;
-}
-.wx-applet {
-  color: #7a737499;
-  text-decoration: underline;
-}
-/* 小程序二维码 hover状态显示 */
-.wx-applet-QR {
-  position: absolute;
-  opacity: 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -35%);
-  width: 170px;
-  height: 170px;
-  background-color: blue;
-  background: url("../assets/wx-applet-QR.png") no-repeat;
-  background-size: 100% 100%;
-  border-radius: 30%;
-}
-.wx-applet:hover + .wx-applet-QR {
-  opacity: 1;
-}
-.wx-logincode {
-  position: absolute;
-  opacity: 1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -35%);
-  width: 200px;
-  height: 200px;
-  background-color: blue;
-  z-index: -1;
-}
-.status {
-  position: absolute;
-  bottom: 35px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #7a737499;
-  font-size: 20px;
-  font-weight: 400;
-  letter-spacing: 1px;
-}
-.go {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  bottom: 3px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  background-color: rgba(235, 233, 233, 0.63);
-}
-.go:hover {
-  cursor: pointer;
-}
-.icon-jinru {
-  color: rgba(16, 165, 16, 0.849);
-  font-weight: 700;
-}
-
-
 </style>
