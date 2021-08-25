@@ -6,8 +6,8 @@
       <div class="wx-applet-QR"></div>
     </div>
     <div class="wx-logincode" id="qrcode" ref="qrcode"></div>
-    <span class="status">等待扫描</span>
-    <button class="go iconfont icon-jinru hide"></button>
+    <span class="status">{{status}}</span>
+    <button class="go iconfont icon-jinru " :class="{'hide':goHide}"></button>
   </div>
 </template>
 
@@ -17,16 +17,30 @@ export default {
     name: "VisitorDesc",
     props:{
       UUID:String,
+      jwt:String
+    },
+    data(){
+      return{
+        status:"等待扫描",
+        goHide: true
+      }
     },
     watch:{
       UUID: function(newData){
         console.log("watch change "+newData);
-        this.$refs.qrcode.innerHTML="";//清楚原有二维码
-        const QRcodeImg=new QRcode(this.$refs.qrcode,{
+        this.$refs.qrcode.innerHTML="";//清除原有二维码
+        new QRcode(this.$refs.qrcode,{
           text:newData,
           width: 200,
           height:200
         })
+      },
+      jwt: function(newData){
+        console.log("get jwt"+newData);
+        //TODO
+
+        this.status="登陆成功";
+        this.goHide=false;//显示进入按钮
       }
     }
 };

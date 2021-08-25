@@ -5,13 +5,14 @@
     </div>
     <div id="cards">
       <card :contentTitle="contentTitle1" @getUUID="getUUID">
-        <visitor-desc :UUID="UUID"></visitor-desc>
+        <visitor-desc :UUID="UUID" :jwt="jwt"></visitor-desc>
       </card>
       <card :contentTitle="contentTitle2">
         <admin-login></admin-login>
       </card>
     </div>
-    <input type="text" v-model="UUID">
+    模拟输入UUID<input type="text" v-model="UUID" >
+    模拟服务器返回的轮询数据<input type="text" v-model="jwtInput">
   </div>
 </template>
 
@@ -26,14 +27,32 @@ export default {
     return {
       contentTitle1: "干事报名",
       contentTitle2: "审核入口",
-      UUID:"获取中"
+      UUID:"获取中",
+      jwt:"null",
+      jwtInput:"null",//用于模拟服务器返回询问数据
+      timer: null
     };
   },
   methods:{
     getUUID(){
-      console.log("f get");
+      console.log("get UUID");
       //TODO 在这里获取UUID
       setTimeout(()=>{this.UUID="test UUID";},1000);
+      this.timer=setInterval(this.getJWT,5000);
+    },
+    getJWT(){
+      //TODO 发送请求
+      console.log("begin ask");
+      if(this.jwtInput.includes("OK")){
+        this.jwt=this.jwtInput;
+        console.log("jwt ok!");
+        clearInterval(this.timer);
+      }
+      if(this.jwtInput.includes("FAIL")){
+        console.log("jwt FAIL!",this.jwtInput);
+        clearInterval(this.timer);
+        this.getUUID();
+      }
     }
   }
 };
