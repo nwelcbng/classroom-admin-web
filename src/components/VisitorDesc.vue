@@ -6,48 +6,56 @@
       <div class="wx-applet-QR"></div>
     </div>
     <div class="wx-logincode" id="qrcode" ref="qrcode"></div>
-    <span class="status">{{status}}</span>
-    <button class="go iconfont icon-jinru " :class="{'hide':goHide}"></button>
+    <span class="status">{{ status }}</span>
+    <!-- <button class="go iconfont icon-jinru " :class="{'hide':goHide}"></button> -->
+    <el-button
+      type="success"
+      :class="{ hide: goHide }"
+      class="go"
+      size="mini"
+      round
+      >进入<i class="el-icon-right el-icon--right"></i
+    ></el-button>
   </div>
 </template>
 
 <script>
-import QRcode from 'qrcodejs2';
+import QRcode from "qrcodejs2";
 export default {
-    name: "VisitorDesc",
-    props:{
-      UUID:String,
-      jwt:String
+  name: "VisitorDesc",
+  props: {
+    UUID: String,
+    jwt: String,
+  },
+  data() {
+    return {
+      status: "等待扫描",
+      goHide: true,
+    };
+  },
+  watch: {
+    UUID: function (newData) {
+      console.log("watch change " + newData);
+      this.$refs.qrcode.innerHTML = ""; //清除原有二维码
+      new QRcode(this.$refs.qrcode, {
+        text: newData,
+        width: 200,
+        height: 200,
+        colorLight:"#fff0"//背景透明
+      });
     },
-    data(){
-      return{
-        status:"等待扫描",
-        goHide: true
-      }
-    },
-    watch:{
-      UUID: function(newData){
-        console.log("watch change "+newData);
-        this.$refs.qrcode.innerHTML="";//清除原有二维码
-        new QRcode(this.$refs.qrcode,{
-          text:newData,
-          width: 200,
-          height:200
-        })
-      },
-      jwt: function(newData){
-        console.log("get jwt"+newData);
-        //TODO
+    jwt: function (newData) {
+      console.log("get jwt" + newData);
+      //TODO
 
-        this.status="登陆成功";
-        this.goHide=false;//显示进入按钮
-      }
-    }
+      this.status = "登陆成功";
+      this.goHide = false; //显示进入按钮
+    },
+  },
 };
 </script>
 
 <style>
-
 .desc {
   margin: 40px 5px;
   color: #7a737499;
@@ -99,13 +107,12 @@ export default {
 }
 .go {
   position: absolute;
-  width: 30px;
-  height: 30px;
   bottom: 3px;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 50%;
-  background-color: rgba(235, 233, 233, 0.63);
+  text-align: center;
+  background-color: rgba(51, 214, 51, 0.603);
+  box-shadow: 20px 20px 60px #bebebe99;
 }
 .go:hover {
   cursor: pointer;
