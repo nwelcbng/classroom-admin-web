@@ -25,6 +25,9 @@
 </template>
 
 <script>
+import md5 from "js-md5";
+import { PostAdminLogin } from '../network/ElcRequest';
+
 export default {
   name: "AdminLogin",
   data() {
@@ -37,7 +40,24 @@ export default {
   },
   methods:{
     login(){
-
+      console.log(this.account,this.psswd);
+      this.mdPsswd=md5(this.psswd);
+      PostAdminLogin("/admin/login",{
+        data:{
+          username:this.account,
+          password:this.mdPsswd
+        }
+      }).then(res=>{
+        console.log(res);
+        if(res.data.code==="200"){
+          //res.data.data 是管理员jwt
+          this.result=res.data.message;
+        }else{
+          this.result="登录失败"//这里不知道message会不会包含密码错误和账户不存在等情况，如果有按照message显示
+        }
+      }).catch(err=>{
+        console.log(err);
+      })
     }
   }
 };

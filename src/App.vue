@@ -36,6 +36,7 @@
 import AdminLogin from "./components/AdminLogin.vue";
 import Card from "./components/Card.vue";
 import VisitorDesc from "./components/VisitorDesc.vue";
+import {GetU} from "./network/ElcRequest"
 export default {
   components: { Card, VisitorDesc, AdminLogin },
   name: "App",
@@ -51,11 +52,21 @@ export default {
   },
   methods: {
     getUUID() {
-      console.log("get UUID");
       //TODO 在这里获取UUID
-      setTimeout(() => {
-        this.UUID = "test UUID";
-      }, 1000);
+      GetUUID({
+        url: '/user/getQRCode'
+      }).then(res=>{
+        if(res.code==="200"){
+          this.UUID=res.data.UUID;
+        }
+        else{
+          console.log(res);
+          this.getUUID();//失败后再次尝试获取UUID
+        }
+      }).catch(err=>{
+        this.UUID="远程服务器响应错误，请联系管理员"+err;
+      })
+      //开始轮询
       this.timer = setInterval(this.getJWT, 5000);
     },
     getJWT() {
