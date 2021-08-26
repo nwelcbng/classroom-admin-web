@@ -1,104 +1,36 @@
 <template>
-  <div>
-    <div class="title">
-      <span class="italic">GDUTELC</span> - 干事招新报名系统
+  <div id="app">
+    <img src="./assets/logo.png">
+    <div>
+      <p>
+        If Element is successfully added to this project, you'll see an
+        <code v-text="'<el-button>'"></code>
+        below
+      </p>
+      <el-button>el-button</el-button>
     </div>
-    <div id="cards">
-      <card :contentTitle="contentTitle1" @getUUID="getUUID">
-        <visitor-desc :UUID="UUID" :jwt="jwt"></visitor-desc>
-      </card>
-      <card :contentTitle="contentTitle2">
-        <admin-login></admin-login>
-      </card>
-    </div>
-    模拟输入UUID<input type="text" v-model="UUID" >
-    模拟服务器返回的轮询数据<input type="text" v-model="jwtInput">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
-import AdminLogin from "./components/AdminLogin.vue";
-import Card from "./components/Card.vue";
-import VisitorDesc from "./components/VisitorDesc.vue";
+import HelloWorld from './components/HelloWorld.vue'
+
 export default {
-  components: { Card, VisitorDesc, AdminLogin },
-  name: "App",
-  data() {
-    return {
-      contentTitle1: "干事报名",
-      contentTitle2: "审核入口",
-      UUID:"获取中",
-      jwt:"null",
-      jwtInput:"null",//用于模拟服务器返回询问数据
-      timer: null
-    };
-  },
-  methods:{
-    getUUID(){
-      console.log("get UUID");
-      //TODO 在这里获取UUID
-      setTimeout(()=>{this.UUID="test UUID";},1000);
-      this.timer=setInterval(this.getJWT,5000);
-    },
-    getJWT(){
-      //TODO 发送请求
-      console.log("begin ask");
-      if(this.jwtInput.includes("OK")){
-        this.jwt=this.jwtInput;
-        console.log("jwt ok!");
-        clearInterval(this.timer);
-      }
-      if(this.jwtInput.includes("FAIL")){
-        console.log("jwt FAIL!",this.jwtInput);
-        clearInterval(this.timer);
-        this.getUUID();
-      }
-    }
+  name: 'app',
+  components: {
+    HelloWorld
   }
-};
+}
 </script>
 
 <style>
-body {
-  background-image: linear-gradient(
-    125deg,
-    #fab1a0,
-    #ffeaa7,
-    #55efc4,
-    #81ecec,
-    #74b9ff,
-    #a29bfe
-  );
-  background-size: 500% 500%;
-  /* animation: slide 15s infinite; */
-}
-@keyframes slide {
-  0% {
-    background-position: 0% 0%;
-  }
-  25% {
-    background-position: 75% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  75% {
-    background-position: 50% 75%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-}
-.title {
-  margin-top: 50px;
-  font-size: 50px;
-  letter-spacing: 10px;
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #ffffff99;
-}
-#cards {
-  margin-top: 80px;
-  display: flex;
-  justify-content: space-around;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>
