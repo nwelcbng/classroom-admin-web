@@ -42,7 +42,7 @@ export default {
     login(){
       console.log(this.account,this.psswd);
       this.mdPsswd=md5(this.psswd);
-      PostAdminLogin("/admin/login",{
+      PostAdminLogin({
         data:{
           username:this.account,
           password:this.mdPsswd
