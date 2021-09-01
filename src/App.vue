@@ -54,7 +54,7 @@ export default {
       //TODO 在这里获取UUID
       GetELCUUID()
         .then((res) => {
-          if (res.data.code === "200") {
+          if (res.data.code === 200) {
             this.UUID = res.data.data;
           } else {
             console.log(res);
@@ -73,7 +73,7 @@ export default {
       GetScanResult()
         .then((res) => {
           console.log(res);
-          if (res.data.code === "200") {
+          if (res.data.code === 200) {
             //登录成功
             this.jwt = res.data.jwt;
             clearInterval(this.timer);

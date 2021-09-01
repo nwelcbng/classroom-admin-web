@@ -49,7 +49,7 @@ export default {
         }
       }).then(res=>{
         console.log(res);
-        if(res.data.code==="200"){
+        if(res.data.code===200){
           //res.data.data 是管理员jwt
           this.result=res.data.message;
         }else{
