@@ -19,14 +19,16 @@
         ></el-input>
       </div>
     </div>
-    <span class="inputRst">{{result}}</span>
-    <el-button id="login-btn" type="primary" round @click="login">登录</el-button>
+    <span class="inputRst">{{ result }}</span>
+    <el-button id="login-btn" type="primary" round @click="login"
+      >登录</el-button
+    >
   </div>
 </template>
 
 <script>
 import md5 from "js-md5";
-import { PostAdminLogin } from '../network/ElcRequest';
+import { PostAdminLogin } from "@/views/login/network/ElcRequest";
 
 export default {
   name: "AdminLogin",
@@ -35,31 +37,34 @@ export default {
       account: "",
       psswd: "",
       mdPsswd: "",
-      result:"",
+      result: "",
     };
   },
-  methods:{
-    login(){
-      console.log(this.account,this.psswd);
-      this.mdPsswd=md5(this.psswd);
+  methods: {
+    login() {
+      // location.href="./admin.html"; //这里可以直接进行跳转
+      console.log(this.account, this.psswd);
+      this.mdPsswd = md5(this.psswd);
       PostAdminLogin({
-        data:{
-          username:this.account,
-          password:this.mdPsswd
-        }
-      }).then(res=>{
-        console.log(res);
-        if(res.data.code===200){
-          //res.data.data 是管理员jwt
-          this.result=res.data.message;
-        }else{
-          this.result="登录失败"//这里不知道message会不会包含密码错误和账户不存在等情况，如果有按照message显示
-        }
-      }).catch(err=>{
-        console.log(err);
+        data: {
+          username: this.account,
+          password: this.mdPsswd,
+        },
       })
-    }
-  }
+        .then((res) => {
+          console.log(res);
+          if (res.data.code === 200) {
+            //res.data.data 是管理员jwt
+            this.result = res.data.message;
+          } else {
+            this.result = "登录失败"; //这里不知道message会不会包含密码错误和账户不存在等情况，如果有按照message显示
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
 };
 </script>
 
@@ -88,13 +93,13 @@ export default {
   height: 50px;
   font-size: 20px;
 }
-#login-btn{
+#login-btn {
   width: 150px;
   background-color: rgba(255, 255, 255, 0.3);
   color: #7a737499;
   font-size: 20px;
 }
-.inputRst{
+.inputRst {
   position: absolute;
   bottom: 100px;
   left: 50%;
