@@ -42,11 +42,11 @@ var server = http.createServer(function (request, response) {
       message: "success"
     }));
   }
-  if (request.url.includes("/user/weblogin")) {
+  if(request.url.includes("/user/weblogin")){
     response.end(JSON.stringify({
       data: {
         code:200,
-        jwt:"This is a jwt"
+        jwt:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIxIiwicGhvbmUiOiIxMzYyMjM2MTQzMSIsIm5hbWUiOiLlvKDov5znqIsiLCJleHAiOjE2MzA3MDUzNzksImlhdCI6MTYzMDY2OTM3OX0.tzmDPlNTjigIywJ_nMM_sj1I-WpX-4UF9j4JLQf7zo8"
       },
       code: 200,
       message: "success"

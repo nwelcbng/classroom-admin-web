@@ -14,6 +14,7 @@
       class="go"
       size="mini"
       round
+      @click="goToUser"
       >进入<i class="el-icon-right el-icon--right"></i
     ></el-button>
   </div>
@@ -52,6 +53,11 @@ export default {
       this.goHide = false; //显示进入按钮
     },
   },
+  methods:{
+    goToUser(){
+      this.$emit("goToUser")
+    }
+  }
 };
 </script>
 

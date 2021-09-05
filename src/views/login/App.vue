@@ -5,7 +5,7 @@
     </div>
     <div id="cards">
       <card :contentTitle="contentTitle1" @getUUID="getUUID">
-        <visitor-desc :UUID="UUID" :jwt="jwt"></visitor-desc>
+        <visitor-desc :UUID="UUID" :jwt="jwt" @goToUser="locTo('/user')"></visitor-desc>
       </card>
       <card :contentTitle="contentTitle2">
         <admin-login></admin-login>
@@ -30,6 +30,7 @@
     </div>
     <el-button type="primary" @click="locTo('/admin')">admin</el-button>
     <el-button type="primary" @click="locTo('/user')">user</el-button>
+    <el-button type="primary" @click="clearLocStore">清空localStorage</el-button>
   </div>
 </template>
 
@@ -78,6 +79,8 @@ export default {
           if (res.data.code === 200) {
             //登录成功
             this.jwt = res.data.jwt;
+            localStorage.setItem("jwt", res.data.data.jwt);
+            console.log(localStorage.jwt,res.data.data.jwt);
             clearInterval(this.timer);
           }
         })
@@ -98,6 +101,9 @@ export default {
     locTo(url){
       location.href=url
     },
+    clearLocStore(){
+      localStorage.clear()
+    }
 
   },
 };
