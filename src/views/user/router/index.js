@@ -1,11 +1,10 @@
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-const info = () => { import('../../../components/user/InfoForm.vue') }
-const reg = () => { import('../../../components/user/RegForm.vue') }
+const info = () =>  { return import('../views/Info/Info.vue')}
+const reg = () =>  { return import('../views/Reg/Reg.vue')}
 
-Vue.use(VueRouter)
-
+Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
@@ -13,11 +12,12 @@ const routes = [
 
   },
   {
-    path: "/user",
-    name: "User",
+    path: "/reg",
+    name: "Reg",
     component: reg
   },
   {
+
     path: "/info",
     name: "Info",
     component: info
@@ -27,7 +27,6 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
   routes
 })
 

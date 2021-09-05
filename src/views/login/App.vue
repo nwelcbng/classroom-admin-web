@@ -28,6 +28,8 @@
         show-password
       ></el-input>
     </div>
+    <el-button type="primary" @click="locTo('/admin')">admin</el-button>
+    <el-button type="primary" @click="locTo('/user')">user</el-button>
   </div>
 </template>
 
@@ -93,6 +95,10 @@ export default {
         this.getUUID();
       }
     },
+    locTo(url){
+      location.href=url
+    },
+
   },
 };
 </script>

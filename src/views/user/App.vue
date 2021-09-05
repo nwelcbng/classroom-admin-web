@@ -1,32 +1,51 @@
 <template>
   <div>
-    <h1>这是个人界面</h1>
-    <router-link to="/reg">报名表</router-link>
-    <router-link to="/info">个人信息</router-link>
-    <hr>
-    <router-view></router-view>
+    <div class="side-bar">
+      <el-button @click="goTo('reg')" class="side-btn">报名表</el-button>
+      <el-button @click="goTo('info')" class="side-btn">个人信息</el-button>
+    </div>
+    <div class="card">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </div>
   </div>
-
 </template>
 
-<script>
-import InfoForm from "@/components/user/InfoForm.vue";
-import RegForm from "@/components/user/RegForm.vue";
+<script scoped>
 export default {
-  components: { InfoForm , RegForm},
   name: "App",
   data() {
-    return {
-
-    };
+    return {};
   },
   methods: {
-
+    goTo(url) {
+      this.$router.push(url);
+    },
   },
 };
 </script>
 
 <style>
+.card{
+  position: sticky;
+  margin: 100px 150px;
+}
+.side-bar{
+  display: inline-block;
+  width: 150px;
+  position: fixed;
+  top: 30px;
+  left: 0px;
+}
+.side-btn{
+  width: 100px;
+  height: 50px;
+  margin: 10px !important;
+}
+.side-bar .el-button {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
 body {
   background-image: linear-gradient(
     125deg,
