@@ -46,7 +46,7 @@ var server = http.createServer(function (request, response) {
     response.end(JSON.stringify({
       data: {
         code:200,
-        jwt:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIxIiwicGhvbmUiOiIxMzYyMjM2MTQzMSIsIm5hbWUiOiLlvKDov5znqIsiLCJleHAiOjE2MzA3MDUzNzksImlhdCI6MTYzMDY2OTM3OX0.tzmDPlNTjigIywJ_nMM_sj1I-WpX-4UF9j4JLQf7zo8"
+        jwt:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJwaG9uZSI6dHJ1ZSwiaWF0IjoxNTE2MjM5MDIyfQ.x27K81l-cGgBgsMCc0-XopG25CX-aZG3qrI9OOcjs1M"
       },
       code: 200,
       message: "success"

@@ -76,7 +76,7 @@
             <div class="half preview"><VueMarkdown :source="form.qq" /></div>
           </el-form-item>
 
-          <div v-if="ifPhone">
+          <div v-if="needPhone">
             <el-form-item label="手机号" prop="phone">
               <el-input v-model="form.phone" class="half">
                 <el-button slot="append" @click="getCode" :disabled="!ifCode">{{getCodeMsg}}</el-button>
@@ -235,7 +235,7 @@ export default {
       }
     };
     return {
-      ifPhone: true,
+      needPhone: true,
       ifCode: false,
       codeSec:0,
       form: {
@@ -448,6 +448,19 @@ export default {
         return "获取验证码("+this.codeSec+")"
       }
     }
+  },
+  created(){
+    console.log(JSON.parse(Buffer.from(localStorage.jwt.split(".")[1], 'base64')).phone);
+    if(!localStorage.jwt){
+      this.$message({
+          message: '未检测到有效登录信息，请重新登录',
+          type: 'warning'
+        });
+      setTimeout(()=>location.href="/",2000)
+    }else if(JSON.parse(Buffer.from(localStorage.jwt.split(".")[1], 'base64')).phone){
+      this.needPhone=false;
+    }
+
   }
 };
 </script>
