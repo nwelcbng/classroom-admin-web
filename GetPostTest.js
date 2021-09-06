@@ -10,8 +10,12 @@ var server = http.createServer(function (request, response) {
 
   response.writeHead(200, {
     "Content-Type": 'text/html',
-    "Access-Control-Allow-Origin": "*"
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Authorization"
   });
+  if(request.method === "OPTIONS"){
+    response.end();
+  }
   if (request.method === "POST") {
     request.on('data', chunk => {
       data += chunk;
@@ -33,6 +37,22 @@ var server = http.createServer(function (request, response) {
         }
         response.end(JSON.stringify(res));
       }
+      if (request.url.includes("/user/webGetPhone")) {
+        let d = qs.parse(data);
+        console.log(d.phone);
+        let res = request.headers.authorization ? {
+          data: "ok",
+          code:1,
+          msg: "success"
+        } : {
+          data: "no jwt",
+          code: -200,
+          msg: "wrong no jwt"
+        }
+        response.end(JSON.stringify(res));
+      }
+
+
     })
   }
   if (request.url.includes("/user/getQRCode")) {
@@ -46,7 +66,7 @@ var server = http.createServer(function (request, response) {
     response.end(JSON.stringify({
       data: {
         code:200,
-        jwt:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJwaG9uZSI6dHJ1ZSwiaWF0IjoxNTE2MjM5MDIyfQ.x27K81l-cGgBgsMCc0-XopG25CX-aZG3qrI9OOcjs1M"
+        jwt:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJwaG9uZSI6ZmFsc2UsImlhdCI6MTUxNjIzOTAyMn0.Bu7Sx763kL_x8BABjQo9axByiikGvQP67F7B8j4iMFI"
       },
       code: 200,
       message: "success"
