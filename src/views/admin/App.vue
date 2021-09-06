@@ -59,6 +59,18 @@ export default {
       }, 300);
     },
   },
+  created(){
+    console.log(localStorage.jwt);
+    if (!localStorage.jwt) {
+      this.$message({
+        message: "未检测到有效登录信息，请重新登录",
+        type: "warning",
+      });
+      setTimeout(() => (location.href = "/"), 2000);
+    }else{
+      
+    }
+  }
 };
 </script>
 

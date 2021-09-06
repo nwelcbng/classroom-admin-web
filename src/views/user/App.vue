@@ -18,38 +18,37 @@ export default {
   data() {
     return {};
   },
-  created(){
+  created() {
     console.log(localStorage.jwt);
-    if(!localStorage.jwt){
+    if (!localStorage.jwt) {
       this.$message({
-          message: '未检测到有效登录信息，请重新登录',
-          type: 'warning'
-        });
-      setTimeout(()=>location.href="/",2000)
+        message: "未检测到有效登录信息，请重新登录",
+        type: "warning",
+      });
+      setTimeout(() => (location.href = "/"), 2000);
     }
   },
   methods: {
     goTo(url) {
       this.$router.push(url);
     },
-
   },
 };
 </script>
 
 <style>
-.card{
+.card {
   position: sticky;
   margin: 100px 150px;
 }
-.side-bar{
+.side-bar {
   display: inline-block;
   width: 150px;
   position: fixed;
   top: 30px;
   left: 0px;
 }
-.side-btn{
+.side-btn {
   width: 100px;
   height: 50px;
   margin: 10px !important;
