@@ -11,7 +11,7 @@
       <el-main class="main">
         <transition name="el-fade-in-linear">
           <keep-alive >
-            <router-view v-show="show"  />
+            <router-view v-show="show" @toPage="goTo"/>
           </keep-alive>
         </transition>
       </el-main>
@@ -47,6 +47,7 @@ export default {
       }, 300);
     },
     goTo(params) {
+      console.log(params)
       this.show = false;
       if(this.$route.query.id){
         params.query.id = this.$route.query.id;
