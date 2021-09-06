@@ -15,7 +15,7 @@
       <div class="CommitRate">
         <span class="rate">评分</span>
         <el-rate
-          v-model="value"
+          v-model="form.value"
           :icon-classes="iconClasses"
           void-icon-class="icon-rate-face-off"
           :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
@@ -38,11 +38,11 @@ export default {
     },
     data(){
         return{
-            value:5,
+            
             iconClasses: ['icon-rate-face-1', 'icon-rate-face-2', 'icon-rate-face-3'] ,
             form: {
-                result: "",
                 textarea: "",
+                value:5
             },
             formLabelWidth: "140px",
         }

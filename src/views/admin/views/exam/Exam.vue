@@ -64,7 +64,7 @@ import {
   DeleteInfo,
 } from "../../network/exam.js";
 import { examInfoFilter } from "../../data/exam.js";
-import ExamSubmit from "@/components/exam/exam-submit/ExamSubmit.vue";
+import ExamSubmit from "@/components/common/exam-submit/ExamSubmit.vue";
 import ExamCommit from "@/components/exam/exam-commit/ExamCommit.vue";
 export default {
   data() {
@@ -82,12 +82,14 @@ export default {
   },
   methods: {
     submitSure(res) {
+      console.log(res);
       this.dialogFormVisible1 = false;
     },
     submitCancel() {
       this.dialogFormVisible1 = false;
     },
     commitSure(res) {
+      console.log(res);
       this.dialogFormVisible2 = false;
     },
     commitCancel() {
@@ -96,15 +98,15 @@ export default {
   },
   created() {
     // const data = {
-    //         "title": "这是一个测试评价",
-    //         "raw": "管理员1&学生1&4@@@这是一条测试评价",
-    //         "category": 38,
-    //         "archetype": "regular",
-    //         "created_at": "测试"
-    //     }
-    // SetExamInfo(data).then(res => {
-    //     console.log(res);
-    // })
+    //   title: "这是一个测试评价",
+    //   raw: "管理员1&学生1&4@@@这是一条测试评价",
+    //   category: 38,
+    //   archetype: "regular",
+    //   created_at: "测试",
+    // };
+    // SetExamInfo(data).then((res) => {
+    //   console.log(res);
+    // });
     GetExamInfo().then((res) => {
       const newData = examInfoFilter(res);
       console.log(newData);

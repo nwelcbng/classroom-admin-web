@@ -20,7 +20,7 @@
         show-text
       >
       </el-rate>
-      <span class="time">{{data.time}}</span>
+      <span class="time">{{time()}}</span>
     </div>
   </div>
 </template>
@@ -35,7 +35,26 @@ export default {
   props:{
     data:Object
   },
-  methods: {},
+  computed:{
+  },
+  methods: {
+    time(){
+      let gap = new Date().getTime() - new Date(this.data.time).getTime();
+      if(parseInt(gap/1000/60/60/24/365) != 0){
+        return parseInt(gap/1000/60/60/24/365) + "年前"
+      }
+      else if(parseInt(gap/1000/60/60/24/30) != 0){
+        return parseInt(gap/1000/60/60/24/30) + "月前"
+      }
+      else if(parseInt(gap/1000/60/60/24) != 0){
+        return parseInt(gap/1000/60/60/24) + "天前"
+      }
+      else if(parseInt(gap/1000/60/60) != 0){
+        return parseInt(gap/1000/60/60)+ "小时前"
+      }
+        return parseInt(gap/1000/60) + "分钟前"
+    }
+  },
 };
 </script>
 
@@ -81,6 +100,9 @@ export default {
 }
 .rate,
 .time {
-  margin: 0 30px;
+  margin:0 30px;
+}
+.time{
+  color:grey;
 }
 </style>
