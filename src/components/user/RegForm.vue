@@ -164,8 +164,11 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click.prevent="onSubmit">提交</el-button>
+            <el-button type="primary" @click.prevent="onSubmit" class="">提交</el-button>
+            <el-button type="primary" @click="storeLoc" class="inline-block">暂存至本地</el-button>
+            <el-button type="primary" @click="recoverLoc" class="inline-block">恢复本地历史</el-button>
           </el-form-item>
+
         </el-form>
       </div>
     </el-card>
@@ -421,8 +424,7 @@ export default {
       this.$refs["form"].validate((valid)=>{
         if(valid){
           console.log("提交", JSON.stringify(this.form));
-          this.$emit("submitForm",JSON.stringify(this.form))
-          alert("已提交")
+          this.$emit("submitForm",JSON.parse(JSON.stringify(this.form)))
         }else{
           return false;
         }
@@ -437,7 +439,22 @@ export default {
         window.clearInterval(countDown)//清除倒计时
         this.ifCode=true;//恢复按钮点击
       },60000)
-
+    },
+    storeLoc(){
+      // console.log(this.form);
+      // console.log((new Function("return "+JSON.stringify(this.form)))());
+      localStorage.setItem("formHistory",JSON.stringify(this.form));
+      this.$message({
+          message: "保存成功",
+          type: 'success'
+        });
+    },
+    recoverLoc(){
+      let oldForm=JSON.parse(localStorage.formHistory);
+      Object.keys(this.form).forEach(key => {
+        console.log(key,oldForm[key]);
+        this.form[key]=oldForm[key]
+      });
     }
   },
   computed:{
@@ -450,7 +467,7 @@ export default {
     }
   },
   created(){
-    console.log(JSON.parse(Buffer.from(localStorage.jwt.split(".")[1], 'base64')).phone);
+    // console.log(JSON.parse(Buffer.from(localStorage.jwt.split(".")[1], 'base64')).phone);
     if(!localStorage.jwt){
       this.$message({
           message: '未检测到有效登录信息，请重新登录',
@@ -475,5 +492,8 @@ export default {
 }
 .preview {
   padding-left: 30px;
+}
+.inline-block{
+  display: inline-block;
 }
 </style>

@@ -7,7 +7,7 @@
 
 <script>
 import RegForm from '../../../../components/user/RegForm.vue'
-import {PostPhone} from "../../network/UserRequest"
+import {PostPhone ,PostForm} from "../../network/UserRequest"
 export default {
   components: { RegForm },
   methods:{
@@ -30,6 +30,18 @@ export default {
     },
     submitForm(form){
       console.log("submit ",form);
+      PostForm(form).then((res)=>{
+        if(res.data.code === 1){
+          this.$message({
+          message: res.data.msg,
+          type: 'success'
+        });
+        }else{
+          this.$message.error(res.data.msg);
+        }
+      }).catch((err)=>{
+        this.$message.error(err);
+      })
     }
   }
 

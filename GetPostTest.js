@@ -10,8 +10,9 @@ var server = http.createServer(function (request, response) {
 
   response.writeHead(200, {
     "Content-Type": 'text/html',
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Authorization"
+    "Access-Control-Allow-Origin": "http://localhost:8081",
+    "Access-Control-Allow-Headers":"Authorization",
+    "Access-Control-Allow-Credentials": true,
   });
   if(request.method === "OPTIONS"){
     response.end();
@@ -40,10 +41,25 @@ var server = http.createServer(function (request, response) {
       if (request.url.includes("/user/webGetPhone")) {
         let d = qs.parse(data);
         console.log(d.phone);
+        // console.log(request.headers.cookie);
         let res = request.headers.authorization ? {
           data: "ok",
           code:1,
-          msg: "success"
+          msg: "已发送验证码"
+        } : {
+          data: "no jwt",
+          code: -200,
+          msg: "wrong no jwt"
+        }
+        response.end(JSON.stringify(res));
+      }
+      if (request.url.includes("/user/websign")) {
+        let d = qs.parse(data);
+        console.log(d,d.name);
+        let res = request.headers.authorization ? {
+          data: "ok",
+          code:1,
+          msg: "提交成功"
         } : {
           data: "no jwt",
           code: -200,
