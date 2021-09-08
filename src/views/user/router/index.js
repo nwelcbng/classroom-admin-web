@@ -8,7 +8,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    component: reg
+    redirect: "/reg"
 
   },
   {
@@ -26,7 +26,6 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
   routes
 })
 
