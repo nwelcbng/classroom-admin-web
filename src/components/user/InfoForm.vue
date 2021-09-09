@@ -1,15 +1,424 @@
 <template>
   <div>
-    <h3>这是个人信息栏</h3>
+    <el-card>
+      <div slot="header">
+        个人信息
+        <el-input v-model="statusNum" placeholder="请输入状态值"></el-input>
+      </div>
+      <div>
+        <el-steps
+          :active="statusNum >= 501 ? 5 : parseInt(statusNum / 100) - 1"
+          finish-status="success"
+        >
+          <el-step title="提交报名表">
+            <el-timeline slot="description">
+              <el-timeline-item
+                key="1"
+                hide-timestamp
+                v-if="statusNum >= 100"
+                :icon="judgeIcon(100).icon"
+                :color="judgeIcon(100).color"
+              >
+                <span class="timeline-desc-title">收集中</span>
+                <span
+                  v-if="statusNum == 100"
+                  style="color: #f56c6c; font-weight: 700"
+                  >未提交</span
+                >
+                <span v-if="statusNum >= 101"
+                  >已提交<el-button class="small-btn" round
+                    >查看报名表</el-button
+                  ></span
+                >
+              </el-timeline-item>
+              <el-timeline-item
+                key="2"
+                hide-timestamp
+                v-if="statusNum >= 110"
+                :icon="judgeIcon(110).icon"
+                :color="judgeIcon(110).color"
+              >
+                <span class="timeline-desc-title">审核</span>
+                <span v-if="statusNum == 110">正在审核...</span>
+                <span v-if="statusNum >= 111">已通过</span>
+              </el-timeline-item>
+            </el-timeline>
+          </el-step>
+          <el-step title="一轮面试">
+            <el-timeline slot="description">
+              <el-timeline-item
+                key="1"
+                hide-timestamp
+                v-if="statusNum >= 200"
+                :icon="judgeIcon(200, 202).icon"
+                :color="judgeIcon(200, 202).color"
+              >
+                <span class="timeline-desc-title">面试通知</span>
+                <span
+                  style="font-weight: 700"
+                  v-if="statusNum >= 200 && statusNum < 210"
+                  >【{{ interviewAddr }}】</span
+                >
+                <span
+                  v-if="statusNum == 200"
+                  style="color: #e6a23c; font-weight: 700"
+                >
+                  待确认
+                  <el-button class="small-btn" round @click="confirmJoin(201)"
+                    >确认参加</el-button
+                  >
+                  <el-button class="small-btn" round @click="confirmJoin(202)"
+                    >放弃</el-button
+                  >
+                </span>
+                <span
+                  v-if="statusNum == 202"
+                  style="color: #f56c6c; font-weight: 700"
+                  >已放弃</span
+                >
+                <span v-if="statusNum >= 201 && statusNum != 202">已确认</span>
+              </el-timeline-item>
+
+              <el-timeline-item
+                key="2"
+                hide-timestamp
+                v-if="statusNum >= 210"
+                :icon="judgeIcon(210).icon"
+                :color="judgeIcon(210).color"
+              >
+                <span class="timeline-desc-title">面试签到</span>
+                <span
+                  v-if="statusNum == 210"
+                  style="color: #e6a23c; font-weight: 700"
+                >
+                  待签到
+                  <el-button class="small-btn" round @click="confirmJoin(210)"
+                    >签到</el-button
+                  >
+                </span>
+                <span v-if="statusNum >= 211">已签到</span>
+              </el-timeline-item>
+
+              <el-timeline-item
+                key="3"
+                hide-timestamp
+                v-if="statusNum >= 220"
+                :icon="judgeIcon(220).icon"
+                :color="judgeIcon(220).color"
+              >
+                <span class="timeline-desc-title">等待叫号</span>
+              </el-timeline-item>
+
+              <el-timeline-item key="4" hide-timestamp v-if="statusNum >= 230"
+                :icon="judgeIcon(230).icon"
+                :color="judgeIcon(230).color">
+                <span class="timeline-desc-title">面试中</span>
+                <span
+                  v-if="statusNum == 230"
+                  style="color: #f56c6c; font-weight: 700"
+                >
+                  已轮到你的面试时间，请去面试
+                </span>
+              </el-timeline-item>
+
+              <el-timeline-item key="5" hide-timestamp v-if="statusNum >= 240"
+                :icon="judgeIcon(240).icon"
+                :color="judgeIcon(240).color">
+                <span class="timeline-desc-title">面试结束</span>
+              </el-timeline-item>
+            </el-timeline>
+          </el-step>
+          <el-step title="笔试">
+            <el-timeline slot="description">
+              <el-timeline-item key="1" hide-timestamp v-if="statusNum >= 300"
+                :icon="judgeIcon(300,302).icon"
+                :color="judgeIcon(300,302).color">
+                <span class="timeline-desc-title">笔试通知</span>
+                <span
+                  style="font-weight: 700"
+                  v-if="statusNum >= 300 && statusNum < 310"
+                  >【{{ examinationAddr }}】</span
+                >
+                <span
+                  v-if="statusNum == 300"
+                  style="color: #e6a23c; font-weight: 700"
+                >
+                  待确认
+                  <el-button class="small-btn" round @click="confirmJoin(301)"
+                    >确认参加</el-button
+                  >
+                  <el-button class="small-btn" round @click="confirmJoin(302)"
+                    >放弃</el-button
+                  >
+                </span>
+                <span
+                  v-if="statusNum == 302"
+                  style="color: #f56c6c; font-weight: 700"
+                  >已放弃</span
+                >
+                <span v-if="statusNum >= 301 && statusNum != 302">已确认</span>
+              </el-timeline-item>
+              <el-timeline-item key="2" hide-timestamp v-if="statusNum >= 310"
+                :icon="judgeIcon(310).icon"
+                :color="judgeIcon(310).color">
+                <span class="timeline-desc-title">笔试签到</span>
+                <span
+                  v-if="statusNum == 310"
+                  style="color: #e6a23c; font-weight: 700"
+                >
+                  待签到
+                  <el-button class="small-btn" round @click="confirmJoin(310)"
+                    >签到</el-button
+                  >
+                </span>
+                <span v-if="statusNum >= 311">已签到</span>
+              </el-timeline-item>
+              <el-timeline-item key="3" hide-timestamp v-if="statusNum >= 320"
+                :icon="judgeIcon(320).icon"
+                :color="judgeIcon(320).color">
+                <span class="timeline-desc-title">笔试交卷</span>
+                <span
+                  v-if="statusNum == 320"
+                  style="color: #e6a23c; font-weight: 700"
+                >
+                  未交卷
+                  <el-button class="small-btn" round @click="confirmJoin(320)"
+                    >交卷</el-button
+                  >
+                </span>
+                <span v-if="statusNum >= 321">已交卷</span>
+              </el-timeline-item>
+            </el-timeline>
+          </el-step>
+          <el-step title="二轮面试">
+            <el-timeline slot="description">
+              <el-timeline-item key="1" hide-timestamp v-if="statusNum >= 400"
+                :icon="judgeIcon(400).icon"
+                :color="judgeIcon(400).color">
+                <span class="timeline-desc-title">等待叫号</span>
+              </el-timeline-item>
+
+              <el-timeline-item key="2" hide-timestamp v-if="statusNum >= 410"
+                :icon="judgeIcon(410).icon"
+                :color="judgeIcon(410).color">
+                <span class="timeline-desc-title">等待第二志愿面试</span>
+              </el-timeline-item>
+            </el-timeline>
+          </el-step>
+          <el-step title="结果">
+            <el-timeline slot="description">
+              <el-timeline-item key="1" hide-timestamp v-if="statusNum >= 500"
+                :icon="judgeIcon(500,502).icon"
+                :color="judgeIcon(500,502).color">
+                <span class="timeline-desc-title">录取结果</span>
+
+                <span v-if="statusNum == 500"> 商讨中... </span>
+                <span
+                  v-if="statusNum == 501"
+                  style="color: #67c23a; font-weight: 700"
+                >
+                  已录取
+                </span>
+                <span
+                  v-if="statusNum == 502"
+                  style="color: #f56c6c; font-weight: 700"
+                >
+                  未录取
+                </span>
+              </el-timeline-item>
+            </el-timeline>
+          </el-step>
+        </el-steps>
+      </div>
+    </el-card>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      stepsNow: 2,
+      statusNum: 302,
+      timeLines: [
+        {
+          content: "支持使用图标",
+          timestamp: "2018-04-12 20:46",
+        },
+        {
+          content: "支持自定义颜色",
+          timestamp: "2018-04-03 20:46",
+          color: "#0bbd87",
+        },
+        {
+          content: "支持自定义尺寸",
+          timestamp: "2018-04-03 20:46",
+          size: "large",
+        },
+        {
+          content: "默认样式的节点",
+          timestamp: "2018-04-03 20:46",
+        },
+      ],
+      interviewAddr: "面试时间地点",
+      examinationAddr: "笔试时间地点",
+    };
+  },
+  watch: {
+    statusNum: function (newStatus) {
+      this.stepsNow = parseInt(newStatus / 100) - 1;
+    },
+  },
+  computed: {
+    judgeIcon() {
+      return function (doingStatus, failStatus) {
+        /*okStatus: {
+          icon: "el-icon-circle-check",
+          color: "#E1F3D8",
+        },
+        doingStatus: {
+          icon: "el-icon-more",
+          color: "#C6E2FF",
+        },
+        failIcon: {
+          icon: "el-icon-circle-close",
+          color: "#FDE2E2",
+        },
+        defaultIcon: {
+          icon: "",
+          color: "",
+        },*/
+        this.statusNum=this.statusNum-0
+        if (failStatus!=undefined && this.statusNum === failStatus) {
+          console.log("fail");
+          return {
+            icon: "el-icon-circle-close",
+            color: "#FDE2E2",
+          };
+        }
+        if (this.statusNum === doingStatus) {
+          return {
+            icon: "el-icon-more",
+            color: "#C6E2FF",
+          };
+        }
+        if (this.statusNum > doingStatus) {
+          return {
+            icon: "el-icon-circle-check",
+            color: "#E1F3D8",
+          };
+        }
+        return {
+          icon: "",
+          color: "",
+        };
+      };
+    },
+  },
+  methods: {
+    confirmJoin(status) {
+      //确认笔试和面试参加
+      switch (status) {
+        case 201:
+        case 301:
+          this.$message({
+            message: "已确认参加",
+            type: "success",
+          });
+          break;
 
-}
+        case 202:
+        case 302:
+          this.$prompt("请填写放弃原因，以供我们参考改进", "提示", {
+            comfirmButtonText: "确认放弃",
+            cancelButtonText: "取消",
+            inputPattern: /\S{3,}/,
+            inputErrorMessage: "请至少输入三个字的放弃原因",
+          })
+            .then(({ value }) => {
+              console.log("放弃原因：", value);
+              this.$message("已确认放弃参加，原因： " + value);
+            })
+            .catch(() => {
+              this.$message("已取消");
+            });
+          break;
+
+        case 210:
+          this.$confirm(
+            `请确认已经到达现场等候，
+          签到后会将您加入等候队列，
+          叫号后三分钟内未到场将视为放弃`,
+            "警告",
+            {
+              confirmButtonText: "确认",
+              cancelButtonText: "取消",
+              type: "warning",
+            }
+          )
+            .then(() => {
+              this.$message({
+                message: "已加入等候队列",
+                type: "success",
+              });
+            })
+            .catch(() => {
+              this.$message("已取消");
+            });
+          break;
+
+        case 310:
+          this.$confirm(`请确认是否已经到达笔试现场`, "警告", {
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            type: "warning",
+          })
+            .then(() => {
+              this.$message({
+                message: "已签到",
+                type: "success",
+              });
+            })
+            .catch(() => {
+              this.$message("已取消");
+            });
+          break;
+
+        case 320:
+          this.$confirm(
+            `请确认是否已经交卷，
+            交卷后会将您加入等候队列，
+            叫号后三分钟内未到场将视为放弃`,
+            "警告",
+            {
+              confirmButtonText: "确认",
+              cancelButtonText: "取消",
+              type: "warning",
+            }
+          )
+            .then(() => {
+              this.$message({
+                message: "已交卷",
+                type: "success",
+              });
+              // this.statusNum=321;
+            })
+            .catch(() => {
+              this.$message("已取消");
+            });
+          break;
+      }
+    },
+  },
+};
 </script>
 
 <style>
-
+.small-btn {
+  padding: 3px 5px !important;
+}
+.timeline-desc-title {
+  font-weight: 700;
+  padding-right: 3px;
+}
 </style>
