@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <div slot="header">
-        个人信息
+        <h2>个人信息</h2>
         <el-input v-model="statusNum" placeholder="请输入状态值"></el-input>
       </div>
       <div>
@@ -109,9 +109,13 @@
                 <span class="timeline-desc-title">等待叫号</span>
               </el-timeline-item>
 
-              <el-timeline-item key="4" hide-timestamp v-if="statusNum >= 230"
+              <el-timeline-item
+                key="4"
+                hide-timestamp
+                v-if="statusNum >= 230"
                 :icon="judgeIcon(230).icon"
-                :color="judgeIcon(230).color">
+                :color="judgeIcon(230).color"
+              >
                 <span class="timeline-desc-title">面试中</span>
                 <span
                   v-if="statusNum == 230"
@@ -121,18 +125,26 @@
                 </span>
               </el-timeline-item>
 
-              <el-timeline-item key="5" hide-timestamp v-if="statusNum >= 240"
+              <el-timeline-item
+                key="5"
+                hide-timestamp
+                v-if="statusNum >= 240"
                 :icon="judgeIcon(240).icon"
-                :color="judgeIcon(240).color">
+                :color="judgeIcon(240).color"
+              >
                 <span class="timeline-desc-title">面试结束</span>
               </el-timeline-item>
             </el-timeline>
           </el-step>
           <el-step title="笔试">
             <el-timeline slot="description">
-              <el-timeline-item key="1" hide-timestamp v-if="statusNum >= 300"
-                :icon="judgeIcon(300,302).icon"
-                :color="judgeIcon(300,302).color">
+              <el-timeline-item
+                key="1"
+                hide-timestamp
+                v-if="statusNum >= 300"
+                :icon="judgeIcon(300, 302).icon"
+                :color="judgeIcon(300, 302).color"
+              >
                 <span class="timeline-desc-title">笔试通知</span>
                 <span
                   style="font-weight: 700"
@@ -158,9 +170,13 @@
                 >
                 <span v-if="statusNum >= 301 && statusNum != 302">已确认</span>
               </el-timeline-item>
-              <el-timeline-item key="2" hide-timestamp v-if="statusNum >= 310"
+              <el-timeline-item
+                key="2"
+                hide-timestamp
+                v-if="statusNum >= 310"
                 :icon="judgeIcon(310).icon"
-                :color="judgeIcon(310).color">
+                :color="judgeIcon(310).color"
+              >
                 <span class="timeline-desc-title">笔试签到</span>
                 <span
                   v-if="statusNum == 310"
@@ -173,9 +189,13 @@
                 </span>
                 <span v-if="statusNum >= 311">已签到</span>
               </el-timeline-item>
-              <el-timeline-item key="3" hide-timestamp v-if="statusNum >= 320"
+              <el-timeline-item
+                key="3"
+                hide-timestamp
+                v-if="statusNum >= 320"
                 :icon="judgeIcon(320).icon"
-                :color="judgeIcon(320).color">
+                :color="judgeIcon(320).color"
+              >
                 <span class="timeline-desc-title">笔试交卷</span>
                 <span
                   v-if="statusNum == 320"
@@ -192,24 +212,36 @@
           </el-step>
           <el-step title="二轮面试">
             <el-timeline slot="description">
-              <el-timeline-item key="1" hide-timestamp v-if="statusNum >= 400"
+              <el-timeline-item
+                key="1"
+                hide-timestamp
+                v-if="statusNum >= 400"
                 :icon="judgeIcon(400).icon"
-                :color="judgeIcon(400).color">
+                :color="judgeIcon(400).color"
+              >
                 <span class="timeline-desc-title">等待叫号</span>
               </el-timeline-item>
 
-              <el-timeline-item key="2" hide-timestamp v-if="statusNum >= 410"
+              <el-timeline-item
+                key="2"
+                hide-timestamp
+                v-if="statusNum >= 410"
                 :icon="judgeIcon(410).icon"
-                :color="judgeIcon(410).color">
+                :color="judgeIcon(410).color"
+              >
                 <span class="timeline-desc-title">等待第二志愿面试</span>
               </el-timeline-item>
             </el-timeline>
           </el-step>
           <el-step title="结果">
             <el-timeline slot="description">
-              <el-timeline-item key="1" hide-timestamp v-if="statusNum >= 500"
-                :icon="judgeIcon(500,502).icon"
-                :color="judgeIcon(500,502).color">
+              <el-timeline-item
+                key="1"
+                hide-timestamp
+                v-if="statusNum >= 500"
+                :icon="judgeIcon(500, 502).icon"
+                :color="judgeIcon(500, 502).color"
+              >
                 <span class="timeline-desc-title">录取结果</span>
 
                 <span v-if="statusNum == 500"> 商讨中... </span>
@@ -230,38 +262,32 @@
           </el-step>
         </el-steps>
       </div>
+      <el-divider>管理员留言</el-divider>
+      <VueMarkdown :source="adminMsg" class="adminmsg" />
+      <el-divider>你的留言</el-divider>
+      <el-input
+        type="textarea"
+        :rows="5"
+        placeholder="请输入留言"
+        v-model="userMsg"
+      >
+      </el-input>
+      <el-button type="primary" @click="submitUserMsg">提交</el-button>
     </el-card>
   </div>
 </template>
 
 <script>
+import VueMarkdown from "vue-markdown";
 export default {
+  components: { VueMarkdown },
   data() {
     return {
-      stepsNow: 2,
       statusNum: 302,
-      timeLines: [
-        {
-          content: "支持使用图标",
-          timestamp: "2018-04-12 20:46",
-        },
-        {
-          content: "支持自定义颜色",
-          timestamp: "2018-04-03 20:46",
-          color: "#0bbd87",
-        },
-        {
-          content: "支持自定义尺寸",
-          timestamp: "2018-04-03 20:46",
-          size: "large",
-        },
-        {
-          content: "默认样式的节点",
-          timestamp: "2018-04-03 20:46",
-        },
-      ],
       interviewAddr: "面试时间地点",
       examinationAddr: "笔试时间地点",
+      adminMsg: "这个是管理员留言\n ### 测试 \n **测试**",
+      userMsg:"",
     };
   },
   watch: {
@@ -272,25 +298,8 @@ export default {
   computed: {
     judgeIcon() {
       return function (doingStatus, failStatus) {
-        /*okStatus: {
-          icon: "el-icon-circle-check",
-          color: "#E1F3D8",
-        },
-        doingStatus: {
-          icon: "el-icon-more",
-          color: "#C6E2FF",
-        },
-        failIcon: {
-          icon: "el-icon-circle-close",
-          color: "#FDE2E2",
-        },
-        defaultIcon: {
-          icon: "",
-          color: "",
-        },*/
-        this.statusNum=this.statusNum-0
-        if (failStatus!=undefined && this.statusNum === failStatus) {
-          console.log("fail");
+        this.statusNum = this.statusNum - 0;
+        if (failStatus != undefined && this.statusNum === failStatus) {
           return {
             icon: "el-icon-circle-close",
             color: "#FDE2E2",
@@ -409,6 +418,24 @@ export default {
           break;
       }
     },
+    submitUserMsg(){
+      this.$confirm("确认提交？","提示",
+            {
+              confirmButtonText: "确认",
+              cancelButtonText: "取消",
+              type: "info",
+            }
+          )
+            .then(() => {
+              this.$message({
+                message: "已提交",
+                type: "success",
+              });
+            })
+            .catch(() => {
+              this.$message("已取消");
+            });
+    }
   },
 };
 </script>
@@ -420,5 +447,10 @@ export default {
 .timeline-desc-title {
   font-weight: 700;
   padding-right: 3px;
+}
+.adminmsg {
+  border: 1px solid #eee;
+  border-radius: 30px;
+  padding: 20px;
 }
 </style>

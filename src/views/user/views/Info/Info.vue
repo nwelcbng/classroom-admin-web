@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>info test</h2>
     <info-form/>
   </div>
 </template>
