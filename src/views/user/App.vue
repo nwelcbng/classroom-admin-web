@@ -39,7 +39,9 @@ export default {
 <style>
 .card {
   position: sticky;
-  margin: 100px 150px;
+  max-width: 1000px;
+  min-width: 500px;
+  margin: 200px auto;
 }
 .side-bar {
   display: inline-block;
