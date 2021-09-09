@@ -4,20 +4,24 @@
 console.log("Hello world");
 var http = require("http")
 var qs = require("querystring")
+var statusNum=100;
+var statusUMsg="";//用户留言
+var statusAMsg="";//管理员留言
 var server = http.createServer(function (request, response) {
   console.log(request.method, request.url);
   let data = "";
 
   response.writeHead(200, {
-    "Content-Type": 'text/html',
+    "Content-Type": 'application/json',
     "Access-Control-Allow-Origin": "http://localhost:8081",
-    "Access-Control-Allow-Headers":"Authorization",
+    "Access-Control-Allow-Headers":"Authorization,Content-Type",
     "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Methods": "PUT,POST,OPTIONS,GET",
   });
   if(request.method === "OPTIONS"){
     response.end();
   }
-  if (request.method === "POST") {
+  if (request.method === "POST" ||request.method === "PUT") {
     request.on('data', chunk => {
       data += chunk;
     });
@@ -56,6 +60,21 @@ var server = http.createServer(function (request, response) {
       if (request.url.includes("/user/websign")) {
         let d = qs.parse(data);
         console.log(d,d.name);
+        let res = request.headers.authorization ? {
+          data: "ok",
+          code:1,
+          msg: "提交成功"
+        } : {
+          data: "no jwt",
+          code: -200,
+          msg: "wrong no jwt"
+        }
+        response.end(JSON.stringify(res));
+      }
+      if (request.url.includes("/user/setstatus")) {
+        console.log(JSON.parse(data));
+        statusNum=data.check;
+        statusUMsg=data.reason;
         let res = request.headers.authorization ? {
           data: "ok",
           code:1,

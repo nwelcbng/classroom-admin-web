@@ -37,3 +37,17 @@ export function GetScanResult() {
   });
   return axios();
 }
+
+
+//向服务器发送状态码信息
+export function PutStatus(config) {
+  const axios = Axios.create({
+    baseURL: "http://127.0.0.1:3421",
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.jwt,
+    }
+  });
+  return axios.put("/user/setstatus", config);
+}

@@ -1,0 +1,5 @@
+PUT https://mockapi.eolinker.com/DIvEEJG0adff1fcb42ec5c36ec5dba353d96bb5387d1a6b/user/setstatus
+Cookie: "45522"
+
+check: 1
+reason: "111"

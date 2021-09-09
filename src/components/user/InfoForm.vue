@@ -92,7 +92,7 @@
                   style="color: #e6a23c; font-weight: 700"
                 >
                   待签到
-                  <el-button class="small-btn" round @click="confirmJoin(210)"
+                  <el-button class="small-btn" round @click="confirmJoin(211)"
                     >签到</el-button
                   >
                 </span>
@@ -183,7 +183,7 @@
                   style="color: #e6a23c; font-weight: 700"
                 >
                   待签到
-                  <el-button class="small-btn" round @click="confirmJoin(310)"
+                  <el-button class="small-btn" round @click="confirmJoin(311)"
                     >签到</el-button
                   >
                 </span>
@@ -202,7 +202,7 @@
                   style="color: #e6a23c; font-weight: 700"
                 >
                   未交卷
-                  <el-button class="small-btn" round @click="confirmJoin(320)"
+                  <el-button class="small-btn" round @click="confirmJoin(321)"
                     >交卷</el-button
                   >
                 </span>
@@ -287,7 +287,7 @@ export default {
       interviewAddr: "面试时间地点",
       examinationAddr: "笔试时间地点",
       adminMsg: "这个是管理员留言\n ### 测试 \n **测试**",
-      userMsg:"",
+      userMsg: "",
     };
   },
   watch: {
@@ -334,6 +334,7 @@ export default {
             message: "已确认参加",
             type: "success",
           });
+          this.$emit("putStatus", status, "");
           break;
 
         case 202:
@@ -347,13 +348,14 @@ export default {
             .then(({ value }) => {
               console.log("放弃原因：", value);
               this.$message("已确认放弃参加，原因： " + value);
+              this.$emit("putStatus", status, value);
             })
             .catch(() => {
               this.$message("已取消");
             });
           break;
 
-        case 210:
+        case 211:
           this.$confirm(
             `请确认已经到达现场等候，
           签到后会将您加入等候队列，
@@ -370,13 +372,14 @@ export default {
                 message: "已加入等候队列",
                 type: "success",
               });
+              this.$emit("putStatus", status, "");
             })
             .catch(() => {
               this.$message("已取消");
             });
           break;
 
-        case 310:
+        case 311:
           this.$confirm(`请确认是否已经到达笔试现场`, "警告", {
             confirmButtonText: "确认",
             cancelButtonText: "取消",
@@ -387,13 +390,14 @@ export default {
                 message: "已签到",
                 type: "success",
               });
+              this.$emit("putStatus", status, "");
             })
             .catch(() => {
               this.$message("已取消");
             });
           break;
 
-        case 320:
+        case 321:
           this.$confirm(
             `请确认是否已经交卷，
             交卷后会将您加入等候队列，
@@ -410,7 +414,7 @@ export default {
                 message: "已交卷",
                 type: "success",
               });
-              // this.statusNum=321;
+              this.$emit("putStatus", status, "");
             })
             .catch(() => {
               this.$message("已取消");
@@ -418,24 +422,24 @@ export default {
           break;
       }
     },
-    submitUserMsg(){
-      this.$confirm("确认提交？","提示",
-            {
-              confirmButtonText: "确认",
-              cancelButtonText: "取消",
-              type: "info",
-            }
-          )
-            .then(() => {
-              this.$message({
-                message: "已提交",
-                type: "success",
-              });
-            })
-            .catch(() => {
-              this.$message("已取消");
-            });
-    }
+    submitUserMsg() {
+      this.$confirm("确认提交？", "提示", {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "info",
+      })
+        .then(() => {
+          this.$message({
+            message: "已提交",
+            type: "success",
+          });
+
+        this.$emit("putStatus", this.statusNum, this.userMsg);
+        })
+        .catch(() => {
+          this.$message("已取消");
+        });
+    },
   },
 };
 </script>
@@ -452,5 +456,6 @@ export default {
   border: 1px solid #eee;
   border-radius: 30px;
   padding: 20px;
+  background-color: red;
 }
 </style>
