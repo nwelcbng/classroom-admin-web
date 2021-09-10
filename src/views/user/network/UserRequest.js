@@ -51,3 +51,16 @@ export function PutStatus(config) {
   });
   return axios.put("/user/setstatus", config);
 }
+
+//向服务器请求状态码信息
+export function GetStatus() {
+  const axios = Axios.create({
+    baseURL: "http://127.0.0.1:3421",
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.jwt,
+    }
+  });
+  return axios("/user/getstatus");
+}

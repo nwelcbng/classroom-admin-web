@@ -265,6 +265,7 @@
       <el-divider>管理员留言</el-divider>
       <VueMarkdown :source="adminMsg" class="adminmsg" />
       <el-divider>你的留言</el-divider>
+      <p style="color: #f56c6cc4;font-size: 14px;">请注意，提交留言会覆盖历史留言，如需保存原留言内容，请在输入框内追加内容而不是删除原有信息</p>
       <el-input
         type="textarea"
         :rows="5"
@@ -281,6 +282,18 @@
 import VueMarkdown from "vue-markdown";
 export default {
   components: { VueMarkdown },
+  props: {
+    Status: {
+      type: Object,
+      default: function () {
+        return {
+          statusNum: 100,
+          userMsg: "",
+          adminMsg: "",
+        };
+      },
+    },
+  },
   data() {
     return {
       statusNum: 302,
@@ -293,6 +306,16 @@ export default {
   watch: {
     statusNum: function (newStatus) {
       this.stepsNow = parseInt(newStatus / 100) - 1;
+    },
+    Status: {
+      immediate: true,
+      deep: true,
+      handler(newStatus) {
+        console.log("get newStatus", newStatus);
+        this.statusNum = newStatus.statusNum;
+        this.adminMsg = newStatus.adminMsg;
+        this.userMsg = newStatus.userMsg;
+      },
     },
   },
   computed: {
@@ -334,7 +357,7 @@ export default {
             message: "已确认参加",
             type: "success",
           });
-          this.$emit("putStatus", status, "");
+          this.$emit("putStatus", status, this.userMsg);
           break;
 
         case 202:
@@ -372,7 +395,7 @@ export default {
                 message: "已加入等候队列",
                 type: "success",
               });
-              this.$emit("putStatus", status, "");
+              this.$emit("putStatus", status, this.userMsg);
             })
             .catch(() => {
               this.$message("已取消");
@@ -390,7 +413,7 @@ export default {
                 message: "已签到",
                 type: "success",
               });
-              this.$emit("putStatus", status, "");
+              this.$emit("putStatus", status, this.userMsg);
             })
             .catch(() => {
               this.$message("已取消");
@@ -414,7 +437,7 @@ export default {
                 message: "已交卷",
                 type: "success",
               });
-              this.$emit("putStatus", status, "");
+              this.$emit("putStatus", status, this.userMsg);
             })
             .catch(() => {
               this.$message("已取消");
@@ -434,13 +457,20 @@ export default {
             type: "success",
           });
 
-        this.$emit("putStatus", this.statusNum, this.userMsg);
+          this.$emit("putStatus", this.statusNum, this.userMsg);
         })
         .catch(() => {
           this.$message("已取消");
         });
     },
+    refreshStatus(){
+      this.$emit("getStatus");
+    }
   },
+  mounted(){
+    this.refreshStatus();
+  }
+
 };
 </script>
 
@@ -456,6 +486,5 @@ export default {
   border: 1px solid #eee;
   border-radius: 30px;
   padding: 20px;
-  background-color: red;
 }
 </style>
