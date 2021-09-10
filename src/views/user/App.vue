@@ -30,7 +30,8 @@ export default {
   },
   methods: {
     goTo(url) {
-      this.$router.push(url);
+      if(!location.href.includes(url))//防止跳转到当前页面出错
+        this.$router.push(url);
     },
   },
 };

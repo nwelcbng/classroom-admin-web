@@ -41,14 +41,19 @@ export default {
         });
     },
     getStatus() {
-      console.log("getStatus");
       GetStatus()
         .then((res) => {
           if (res.data.code === 1) {
             console.log("getstatus 成功",res.data.data);
-            this.Status.statusNum=res.data.data.enroll;//状态码
-            this.Status.userMsg=res.data.data.usermsg;
-            this.Status.adminMsg=res.data.data.result;
+            //这里要给Status对象赋新值，只修改其属性无法激活子控件中的watch！
+            this.Status={
+              statusNum: res.data.data.enroll,//状态码
+              userMsg: res.data.data.usermsg,
+              adminMsg: res.data.data.result,
+            }
+            // this.Status.statusNum=res.data.data.enroll;
+            // this.Status.userMsg=res.data.data.usermsg;
+            // this.Status.adminMsg=res.data.data.result;
 
           } else {
             this.$message.error(res.data.msg);

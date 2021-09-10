@@ -179,6 +179,14 @@
 import VueMarkdown from "vue-markdown";
 export default {
   components: { VueMarkdown },
+  props:{
+    formInfo:{
+      type:Object,
+      default: function(){
+        return {}
+      }
+    }
+  },
   data() {
     var checkPhone=(rule,value,callback)=>{
       if(!this.ifPhone){
@@ -450,11 +458,35 @@ export default {
         });
     },
     recoverLoc(){
+      if(!localStorage.formHistory){
+        this.$message({
+          message:"暂未历史记录，请先保存",
+          type:"error"
+        });
+        return ;
+      }
       let oldForm=JSON.parse(localStorage.formHistory);
       Object.keys(this.form).forEach(key => {
-        console.log(key,oldForm[key]);
+        // console.log(key,oldForm[key]);
         this.form[key]=oldForm[key]
       });
+    }
+  },
+  watch:{
+    formInfo:{
+      immediate:true,
+      deep:true,
+      handler(newFormInfo){
+        // console.log("new",newFormInfo);
+        Object.keys(this.form).forEach(key => {
+        // console.log(key,newForm[key]);
+        this.form[key]=newFormInfo[key]
+        if(key==="grade"||key==="college"||key==="dno"||key==="secdno"){
+          this.form[key]=this.form[key]?this.form[key]-0:1;//还原成数字
+          //上面在初始化时，若为空，则数据全部为undefined，要对数值做适配
+        }
+      });
+      }
     }
   },
   computed:{
@@ -473,10 +505,12 @@ export default {
           message: '未检测到有效登录信息，请重新登录',
           type: 'warning'
         });
-      setTimeout(()=>location.href="/",2000)
+      setTimeout(()=>location.href="/",2000);
+      return ;
     }else if(JSON.parse(Buffer.from(localStorage.jwt.split(".")[1], 'base64')).phone){
       this.needPhone=false;
     }
+    this.$emit("getForm");//第一次创建时拉取报名表
 
   }
 };

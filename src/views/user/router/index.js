@@ -14,7 +14,7 @@ const routes = [
   {
     path: "/reg",
     name: "Reg",
-    component: reg
+    component: reg,
   },
   {
 

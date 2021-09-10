@@ -26,10 +26,10 @@
                   >未提交</span
                 >
                 <span v-if="statusNum >= 101"
-                  >已提交<el-button class="small-btn" round
-                    >查看报名表</el-button
-                  ></span
-                >
+                  >已提交
+                  <el-button class="small-btn" @click="goToReg" round >
+                    查看报名表
+                    </el-button></span>
               </el-timeline-item>
               <el-timeline-item
                 key="2"
@@ -311,7 +311,7 @@ export default {
       immediate: true,
       deep: true,
       handler(newStatus) {
-        console.log("get newStatus", newStatus);
+        // console.log("get newStatus", newStatus);
         this.statusNum = newStatus.statusNum;
         this.adminMsg = newStatus.adminMsg;
         this.userMsg = newStatus.userMsg;
@@ -465,6 +465,13 @@ export default {
     },
     refreshStatus(){
       this.$emit("getStatus");
+    },
+    goToReg(){
+      this.$route.meta.getForm=true;
+      console.log(this.$route.meta);
+      this.$router.push("reg");
+      this.$emit("getForm");
+
     }
   },
   mounted(){

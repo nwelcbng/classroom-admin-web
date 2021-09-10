@@ -28,17 +28,6 @@ export function PostForm(config) {
   return axios.post("/user/websign", qs.stringify(config));
 }
 
-//向服务器轮询用户扫码结果
-export function GetScanResult() {
-  const axios = Axios.create({
-    baseURL: "http://127.0.0.1:3421",
-    timeout: 5000,
-    url: '/user/weblogin'
-  });
-  return axios();
-}
-
-
 //向服务器发送状态码信息
 export function PutStatus(config) {
   const axios = Axios.create({
@@ -63,4 +52,17 @@ export function GetStatus() {
     }
   });
   return axios("/user/getstatus");
+}
+
+//向服务器请求状态码信息
+export function GetForm() {
+  const axios = Axios.create({
+    baseURL: "http://127.0.0.1:3421",
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.jwt,
+    }
+  });
+  return axios("/user/getWebForm");
 }

@@ -7,6 +7,7 @@ var qs = require("querystring")
 var statusNum = 100;
 var statusUMsg = "";//用户留言
 var statusAMsg = "";//管理员留言
+var formInfo="";//报名表单
 var server = http.createServer(function (request, response) {
   console.log(request.method, request.url);
   let data = "";
@@ -60,6 +61,7 @@ var server = http.createServer(function (request, response) {
       if (request.url.includes("/user/websign")) {
         let d = qs.parse(data);
         console.log(d, d.name);
+        formInfo=d;
         let res = request.headers.authorization ? {
           data: "ok",
           code: 1,
@@ -116,6 +118,19 @@ var server = http.createServer(function (request, response) {
           result: statusAMsg,//管理员留言
           usermsg: statusUMsg//用户留言
         },
+        code: 1,
+        msg: "成功 "
+      } : {
+        data: "no jwt",
+        code: -200,
+        msg: "wrong no jwt"
+      }
+      console.log(res);
+      response.end(JSON.stringify(res));
+    }
+    if (request.url.includes("/user/getWebForm")) {
+      let res = request.headers.authorization ? {
+        data: formInfo,
         code: 1,
         msg: "成功 "
       } : {
