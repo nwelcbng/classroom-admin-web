@@ -469,6 +469,7 @@ export default {
   },
   mounted(){
     this.refreshStatus();
+    setInterval(()=>{this.$emit("getStatus")},5000);//轮询状态码，以及时更新
   }
 
 };
