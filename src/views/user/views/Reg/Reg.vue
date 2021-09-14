@@ -14,7 +14,7 @@ export default {
   components: { RegForm },
   data(){
     return {
-      formInfo:"",
+      formInfo:null,
     }
   },
   methods:{
@@ -58,7 +58,9 @@ export default {
               message:"已拉取提交的最新报名表",
               type:"success"
             })
+            // this.formInfo=JSON.stringify(res.data.data);
             this.formInfo=res.data.data;
+            console.log(typeof(this.formInfo));
           }
         }else{
           this.$message.error(res.data.msg);

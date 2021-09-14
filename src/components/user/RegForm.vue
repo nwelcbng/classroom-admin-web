@@ -183,9 +183,7 @@ export default {
   props:{
     formInfo:{
       type:Object,
-      default: function(){
-        return {}
-      }
+      default: null,
     }
   },
   data() {
@@ -492,6 +490,9 @@ export default {
       deep:true,
       handler(newFormInfo){
         // console.log("new",newFormInfo);
+        // console.log(typeof(newFormInfo));
+        // let newForm=JSON.parse(newFormInfo);
+        if(newFormInfo===null)return;
         Object.keys(this.form).forEach(key => {
         // console.log(key,newForm[key]);
         this.form[key]=newFormInfo[key]
