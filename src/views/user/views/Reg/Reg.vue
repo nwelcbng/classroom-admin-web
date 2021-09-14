@@ -66,6 +66,9 @@ export default {
       }).catch((err)=>{
         this.$message.error(err);
       })
+    },
+    checkCode(code){
+
     }
   },
   beforeRouteEnter(to,from,next){

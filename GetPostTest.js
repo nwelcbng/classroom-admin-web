@@ -105,6 +105,30 @@ var server = http.createServer(function (request, response) {
         }
         response.end(JSON.stringify(res));
       }
+      if (request.url.includes("/user/webCheckCode")) {
+        let d = qs.parse(data);
+        console.log(d);
+        console.log(d.code,d.phone);
+        let res = request.headers.authorization ? {
+          data: "ok",
+          code: 1,
+          msg: "提交成功"
+        } : {
+          data: "no jwt",
+          code: -200,
+          msg: "wrong no jwt"
+        }
+        res=d.code==="123456" ? {
+          data: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJwaG9uZSI6dHJ1ZSwiaWF0IjoxNTE2MjM5MDIyfQ.x27K81l-cGgBgsMCc0-XopG25CX-aZG3qrI9OOcjs1M",
+          code: 1,
+          msg: "提交成功"
+        } : {
+          data: "wrong code",
+          code: -200,
+          msg: "wrong code"
+        }
+        response.end(JSON.stringify(res));
+      }
 
 
     })

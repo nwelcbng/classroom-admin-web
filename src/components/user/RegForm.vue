@@ -177,6 +177,7 @@
 
 <script>
 import VueMarkdown from "vue-markdown";
+import {PostCheckCode} from "../../views/user/network/UserRequest"
 export default {
   components: { VueMarkdown },
   props:{
@@ -189,7 +190,7 @@ export default {
   },
   data() {
     var checkPhone=(rule,value,callback)=>{
-      if(!this.ifPhone){
+      if(!this.needPhone){
         callback();//不需要填手机号时跳过
       }
       if(!value){
@@ -207,7 +208,7 @@ export default {
       }
     };
     var checkCode=(rule,value,callback)=>{
-      if(!this.ifPhone){
+      if(!this.needPhone){
         callback();//不需要填手机号时跳过
       }
       if(!value){
@@ -218,7 +219,20 @@ export default {
          callback(new Error("请输入正确的验证码"))
       }
       else{
-        callback();
+        PostCheckCode({
+          phone:this.form.phone,
+          code:value
+        }).then(res=>{
+          if(res.data.code===1){
+            localStorage.jwt=res.data.data;//新的jwt
+            console.log("新的jwt",localStorage.jwt);
+            callback();
+          }else{
+            callback(new Error(res.data.msg))
+          }
+        }).catch(err=>{
+          callback(new Error(err))
+        })
       }
     };
     var checkSno=(rule,value,callback)=>{

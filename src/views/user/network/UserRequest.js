@@ -15,6 +15,18 @@ export function PostPhone(config) {
   // document.cookie=localStorage.jwt;
   return axios.post("/user/webGetPhone", qs.stringify(config));
 }
+//向服务器验证验证码
+export function PostCheckCode(config) {
+  const axios = Axios.create({
+    baseURL: "http://127.0.0.1:3421",
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': localStorage.jwt,
+    }
+  });
+  return axios.post("/user/webCheckCode", qs.stringify(config));
+}
 //向服务器发送报名表单
 export function PostForm(config) {
   const axios = Axios.create({
