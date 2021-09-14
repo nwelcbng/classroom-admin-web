@@ -15,7 +15,7 @@ var server = http.createServer(function (request, response) {
   response.writeHead(200, {
     "Content-Type": 'application/json,application/x-www-form-urlencoded',
     "Access-Control-Allow-Origin": "http://localhost:8081",
-    "Access-Control-Allow-Headers": "Authorization,Content-Type",
+    "Access-Control-Allow-Headers": "Authorization,Content-Type,Cookie",
     "Access-Control-Allow-Credentials": true,
     "Access-Control-Allow-Methods": "PUT,POST,OPTIONS,GET",
   });
@@ -27,14 +27,31 @@ var server = http.createServer(function (request, response) {
       data += chunk;
     });
     request.on("end", () => {
-
+      if (request.url.includes("/user/weblogin")) {
+        let d = qs.parse(data);
+        console.log(qs.parse(data));
+        console.log(d.uuid);
+        let res = d.uuid ? {
+          data: {
+            code: 1,
+            jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJwaG9uZSI6ZmFsc2UsImlhdCI6MTUxNjIzOTAyMn0.Bu7Sx763kL_x8BABjQo9axByiikGvQP67F7B8j4iMFI"
+          },
+          code: 1,
+          message: "success"
+        } : {
+          data: "null",
+          code: -200,
+          message: "no uuid"
+        }
+        response.end(JSON.stringify(res));
+      }
       if (request.url.includes("/admin/login")) {
         let d = qs.parse(data);
         console.log(qs.parse(data));
         console.log(d.username, d.password);
         let res = d.username.includes("admin") ? {
           data: "This is an admin jwt",
-          code: 200,
+          code: 1,
           message: "success"
         } : {
           data: "null",
@@ -97,17 +114,17 @@ var server = http.createServer(function (request, response) {
     if (request.url.includes("/user/getQRCode")) {
       response.end(JSON.stringify({
         data: "This is a test UUID",
-        code: 200,
+        code: 1,
         message: "success"
       }));
     }
     if (request.url.includes("/user/weblogin")) {
       response.end(JSON.stringify({
         data: {
-          code: 200,
+          code: 1,
           jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJwaG9uZSI6ZmFsc2UsImlhdCI6MTUxNjIzOTAyMn0.Bu7Sx763kL_x8BABjQo9axByiikGvQP67F7B8j4iMFI"
         },
-        code: 200,
+        code: 1,
         message: "success"
       }));
     }

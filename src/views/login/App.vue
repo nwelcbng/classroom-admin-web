@@ -38,7 +38,7 @@
 import AdminLogin from "@/components/AdminLogin.vue";
 import Card from "@/components/Card.vue";
 import VisitorDesc from "@/components/VisitorDesc.vue";
-import { GetELCUUID, GetScanResult } from "./network/ElcRequest.js";
+import { GetELCUUID, PostScanResult } from "./network/ElcRequest.js";
 export default {
   components: { Card, VisitorDesc, AdminLogin },
   name: "App",
@@ -57,7 +57,7 @@ export default {
       //TODO 在这里获取UUID
       GetELCUUID()
         .then((res) => {
-          if (res.data.code === 200) {
+          if (res.data.code === 1) {
             this.UUID = res.data.data;
           } else {
             console.log(res);
@@ -73,16 +73,20 @@ export default {
     getJWT() {
       //TODO 发送请求
       console.log("begin ask");
-      GetScanResult()
+      PostScanResult({
+        uuid:this.UUID
+      })
         .then((res) => {
           console.log(res);
-          if (res.data.code === 200) {
+          if (res.data.code === 1) {
             //登录成功
             this.jwt = res.data.jwt;
             localStorage.setItem("jwt", res.data.data.jwt);
             console.log(localStorage.jwt,res.data.data.jwt);
             clearInterval(this.timer);
-          }
+          }else{
+            this.$message(res.msg);
+        }
         })
         .catch((err) => {
           console.log(err);

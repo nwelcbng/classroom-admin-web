@@ -35,7 +35,7 @@ export function PutStatus(config) {
     timeout: 5000,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': localStorage.jwt,
+      'authorization': localStorage.jwt,
     }
   });
   return axios.put("/user/setstatus", config);

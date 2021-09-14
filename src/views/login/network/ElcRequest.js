@@ -24,11 +24,13 @@ export function PostAdminLogin(config){
 }
 
 //向服务器轮询用户扫码结果
-export function GetScanResult(){
+export function PostScanResult(config){
   const axios= Axios.create({
     baseURL:"http://127.0.0.1:3421",
     timeout: 5000,
-    url: '/user/weblogin'
+    headers:{
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   });
-  return axios();
+  return axios.post('/user/weblogin',qs.stringify(config));
 }
