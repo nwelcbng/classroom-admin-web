@@ -1,36 +1,36 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-const home = () => import("../views/home/Home.vue");
-const about = () => import("../views/about/About.vue");
-const exam = () => import("../views/exam/Exam.vue");
+const news = () => import("../views/news/news.vue");
+const classroom = () => import("../views/classroom/classroom.vue");
+const review = () => import("../views/review/review.vue");
+const user = () => import("../views/user/user.vue");
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: 'home',
+    redirect: 'news',
   },
   {
-    path: "/home",
-    name: 'Home',
-    component: home,
+    path: "/news",
+    name: 'news',
+    component: news,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: about
+    path: '/classroom',
+    name: 'classroom',
+    component: classroom
   },
   {
-    path: '/exam',
-    name: 'Exam',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: exam
+    path: '/review',
+    name: 'review',
+    component: review
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: user
   }
 ]
 

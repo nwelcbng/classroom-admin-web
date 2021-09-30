@@ -6,18 +6,18 @@
     </el-aside>
     <el-container>
       <el-header>
-        <el-page-header content="详情页面" @back="goBack"></el-page-header>
+        <el-page-header :content="nowPage" @back="goBack"></el-page-header>
       </el-header>
       <el-main class="main">
         <transition name="el-fade-in-linear">
-          <keep-alive >
-            <router-view v-show="show" @toPage="goTo"/>
+          <keep-alive>
+            <router-view v-show="show" @toPage="goTo" />
           </keep-alive>
         </transition>
       </el-main>
       <el-footer>
         <!-- <router-link to="/about"><button>about</button></router-link> -->
-        <Footer/>
+        <Footer />
       </el-footer>
     </el-container>
   </el-container>
@@ -25,52 +25,67 @@
 <script>
 import HomeUserInfo from "@/components/common/aside/HomeUserInfo.vue";
 import HomeOptions from "@/components/common/aside/HomeOptions.vue";
-import Footer from "@/components/common/footer/Footer.vue"
+import Footer from "@/components/common/footer/Footer.vue";
 export default {
   components: {
     HomeUserInfo,
     HomeOptions,
-    Footer
+    Footer,
   },
   data() {
     return {
       show: true,
     };
   },
+  computed: {
+    nowPage(){
+      switch(this.$route.path){
+        case '/classroom': return '教室页面';
+        case '/news': return '公告页面';
+        case '/review': return '审核页面';
+        case '/user': return '用户页面';
+      }
+    }
+  },
   methods: {
     goBack() {
       this.show = false;
-      setTimeout(() => {
-        history.back();
-        // console.log(this.$route.path + "/" + this.$route.query.type);
-        this.show = true;
-      }, 300);
+      new Promise((resolve) => {
+        setTimeout(() => {
+          history.back();
+          resolve();
+        }, 300);
+      }).then(() => {
+        setTimeout(() => {
+          this.show = true;
+        }, 100);
+      });
     },
     goTo(params) {
-      console.log(params)
       this.show = false;
-      if(this.$route.query.id){
-        params.query.id = this.$route.query.id;
-      } 
-      // console.log(params);
-      setTimeout(() => {
-        this.$router.push(params);
-        this.show = true;
-      }, 300);
+      new Promise((resolve) => {
+        setTimeout(() => {
+          this.$router.push(params);
+          resolve();
+        }, 300);
+      }).then(() => {
+        setTimeout(() => {
+          this.show = true;
+        }, 100);
+      });
     },
   },
-  created(){
-    console.log(localStorage.jwt);
-    if (!localStorage.jwt) {
-      this.$message({
-        message: "未检测到有效登录信息，请重新登录",
-        type: "warning",
-      });
-      setTimeout(() => (location.href = "/"), 2000);
-    }else{
-      
-    }
-  }
+  created() {
+    // console.log(localStorage.jwt);
+    // if (!localStorage.jwt) {
+    //   this.$message({
+    //     message: "未检测到有效登录信息，请重新登录",
+    //     type: "warning",
+    //   });
+    //   setTimeout(() => (location.href = "/"), 2000);
+    // }else{
+    // }
+  },
 };
 </script>
 
@@ -88,7 +103,7 @@ export default {
   display: none;
 }
 @media screen and (min-width: 992px) {
-  .el-aside{
+  .el-aside {
     display: block;
   }
 }

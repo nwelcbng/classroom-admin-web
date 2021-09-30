@@ -5,10 +5,6 @@ import store from './store'
 import '@/plugins/element.js'
 import '@/assets/fonts/style.css'
 
-// Vue.prototype.$axios = Axios;
-// Axios.defaults.baseURL = '/api'
-// Axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 Vue.config.productionTip = false;
 
 

@@ -8,12 +8,12 @@ export function request(config) {
     instance.interceptors.request.use(config => {
         return config;
     }, err => {
-        throw new Error(err)
+        console.log(err)
     })
     instance.interceptors.response.use(res => {
         return res.data;
     }, err => {
-        throw new Error(err)
+        console.log(err)
     })
     return instance(config);
 }
