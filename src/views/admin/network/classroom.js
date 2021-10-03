@@ -1,8 +1,8 @@
 import { request } from './request'
 
-export function getAllNews() {
+export function getAllClass() {
     return request({
-        url: '/admin/getAnnouncements',
+        url: '/user/getClass',
         method: "GET",
         headers: {
             Authorization: localStorage.getItem('token')
@@ -10,22 +10,21 @@ export function getAllNews() {
     })
 }
 
-export function searchNews(aid) {
+export function getClassStatusByDate(data) {
     return request({
-        url: '/admin/getAnnouncementById',
+        url: '/user/getClassStatusByDate',
         method: "GET",
         headers: {
             Authorization: localStorage.getItem('token')
         },
-        params: {
-            aid
-        }
+        params:data
     })
 }
 
-export function deleteNews(data) {
+export function addClass(data){
+    console.log(data)
     return request({
-        url: '/admin/deleteAnnouncement',
+        url: '/admin/addClassRoom',
         method: "POST",
         headers: {
             Authorization: localStorage.getItem('token')
@@ -34,9 +33,9 @@ export function deleteNews(data) {
     })
 }
 
-export function addNews(data){
+export function deleteClass(data){
     return request({
-        url: '/admin/publicAnnouncement',
+        url: '/admin/deleteClassRoom',
         method: "POST",
         headers: {
             Authorization: localStorage.getItem('token')
@@ -45,9 +44,9 @@ export function addNews(data){
     })
 }
 
-export function changeNews(data){
+export function changeClassStatus(data){
     return request({
-        url: '/admin/updateAnnouncement',
+        url: '/admin/changeClassStatus',
         method: "POST",
         headers: {
             Authorization: localStorage.getItem('token')

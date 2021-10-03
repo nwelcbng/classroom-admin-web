@@ -1,13 +1,17 @@
 <template>
     <div class="UserInfo">        
         <img class="UserImg" src="~@/assets/img/logo.png" alt="">
-        <div class="UserName">匿名用户</div>
+        <div class="UserName">{{userInfo}}</div>
     </div>
 </template>
 
 <script>
 export default {
-
+    data(){
+        return {
+            userInfo:localStorage.getItem('username')
+        }
+    }
 }
 </script>
 

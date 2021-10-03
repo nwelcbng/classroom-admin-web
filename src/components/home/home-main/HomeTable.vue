@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div class="main-table">
     <div class="search-input" v-if="hasSearch">
       <el-input v-model="search" :placeholder="'请输入' + type"></el-input>
     </div>
     <div class="search-button" v-if="hasSearch">
       <el-button icon="el-icon-search" @click="HomeSearch"></el-button>
     </div>
-
-    <div class="search-button">
-      <el-button @click="HomeSearch" type="primary">发布公告</el-button>
+    <div class="search-button" v-if="hasSearch">
+      <slot name="add-button"> </slot>
     </div>
+
     <!-- 这是搜索的内容 -->
     <el-table :data="searchData" border v-if="hasSearch && search">
       <el-table-column
@@ -27,7 +27,7 @@
             type="primary"
             icon="el-icon-edit"
             round
-            @click="toPage(scope.row)"
+            @click="showDetail(scope.row)"
             >查看</el-button
           >
           <el-button
@@ -57,10 +57,11 @@
             type="primary"
             icon="el-icon-edit"
             round
-            @click="toPage(scope.row)"
+            @click="showDetail(scope.row)"
             >查看</el-button
           >
           <el-button
+            v-if="hasDeBtn"
             type="danger"
             icon="el-icon-delete"
             round
@@ -70,6 +71,8 @@
         </template>
       </el-table-column>
     </el-table>
+
+
   </div>
 </template>
 
@@ -96,28 +99,32 @@ export default {
     searchData: {
       type: Array,
     },
+    hasDeBtn: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
       search: null,
+      showAddToast: false, //显示添加公告弹窗口
     };
   },
   methods: {
-    toPage(params) {
-      console.log(params);
+    showDetail(params) {
+      this.$emit("showDetail", params);
     },
     HomeSearch() {
       this.$emit("HomeSearch", this.search);
     },
     HomeDelete(params) {
-      console.log(params.aid);
-      this.$emit("HomeDelete", params.aid);
+      this.$emit("HomeDelete", params);
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .el-table {
   width: 100%;
 }
@@ -134,4 +141,5 @@ export default {
   display: inline-block;
   margin-left: 50px;
 }
+
 </style>

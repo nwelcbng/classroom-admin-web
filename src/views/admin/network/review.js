@@ -9,3 +9,14 @@ export function getAllReview() {
         }
     })
 }
+
+export function check(data) {
+    return request({
+        url: '/admin/check',
+        method: "POST",
+        headers: {
+            Authorization: localStorage.getItem('token')
+        },
+        data
+    })
+}

@@ -38,6 +38,7 @@ export default {
             }).then(res => {
                 if(res.code === 1){
                     this.$message('登录成功');  
+                    localStorage.setItem('username',this.username);
                     setTimeout(() => {
                         location.href = '/admin'; 
                     },1000)
@@ -48,6 +49,7 @@ export default {
                 }
             })
             .catch(err => {
+                console.log(err)
                 this.loading = false;
                 this.$message('网络繁忙');  
             }).finally(() => {
