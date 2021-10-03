@@ -7,6 +7,7 @@
       <HomeTable
         @showDetail="showDetail"
         @HomeDelete="HomeDelete"
+        @refresh="refresh"
         :hasSearch="true"
         type="cid"
         v-show="show"
@@ -137,16 +138,19 @@ export default {
     handleCurrentChange(val) {
       this.pageNow = val;
     },
+    refresh() {
+      fomatNetwork.call(this, getAllClass).then(
+        (res) => {
+          this.AllClass = res;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
   },
   created() {
-    fomatNetwork.call(this, getAllClass).then(
-      (res) => {
-        this.AllClass = res;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.refresh();
   },
   activated() {
     // console.log(this.$route.path);

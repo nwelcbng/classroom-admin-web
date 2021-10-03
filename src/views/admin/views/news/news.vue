@@ -8,6 +8,7 @@
         @showDetail="showDetail"
         @HomeSearch="search"
         @HomeDelete="HomeDelete"
+        @refresh="refresh"
         :hasSearch="true"
         type="aid"
         v-show="show"
@@ -210,17 +211,20 @@ export default {
     handleCurrentChange(val) {
       this.pageNow = val;
     },
+    refresh() {
+      fomatNetwork.call(this, getAllNews).then(
+        (res) => {
+          convertDate(res);
+          this.Allnews = res;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
   },
   created() {
-    fomatNetwork.call(this, getAllNews).then(
-      (res) => {
-        convertDate(res);
-        this.Allnews = res;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.refresh();
   },
   activated() {
     console.log(this.$route.path);

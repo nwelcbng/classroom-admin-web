@@ -6,6 +6,9 @@
     <div class="search-button" v-if="hasSearch">
       <el-button icon="el-icon-search" @click="HomeSearch"></el-button>
     </div>
+    <div class="search-button">
+      <el-button icon="el-icon-refresh-right" @click="refresh"></el-button>
+    </div>
     <div class="search-button" v-if="hasSearch">
       <slot name="add-button"> </slot>
     </div>
@@ -71,8 +74,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-
   </div>
 </template>
 
@@ -120,6 +121,9 @@ export default {
     HomeDelete(params) {
       this.$emit("HomeDelete", params);
     },
+    refresh() {
+      this.$emit('refresh');
+    },
   },
 };
 </script>
@@ -139,7 +143,6 @@ export default {
 }
 .search-button {
   display: inline-block;
-  margin-left: 50px;
+  margin: 10px 50px 10px 0px;
 }
-
 </style>

@@ -20,7 +20,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="show = false">取 消</el-button>
-      <el-button type="primary" @click="confirm">修 改</el-button>
+      <el-button type="primary" @click="confirm">发 布</el-button>
     </div>
   </el-dialog>
 </template>

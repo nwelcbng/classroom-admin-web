@@ -1,5 +1,0 @@
-GET http://127.0.0.1:3421/user/getWebForm
-authorization: "45522"
-
-check: 1
-reason: "111"

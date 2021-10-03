@@ -7,6 +7,7 @@
       <HomeTable
         @showDetail="showDetail"
         @HomeDelete="HomeDelete"
+        @refresh="refresh"
         :hasDeBtn="false"
         type="oid"
         v-show="show"
@@ -120,16 +121,19 @@ export default {
     handleCurrentChange(val) {
       this.pageNow = val;
     },
+    refresh() {
+      fomatNetwork.call(this, getAllReview).then(
+        (res) => {
+          this.AllReview = res;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
   },
   created() {
-    fomatNetwork.call(this, getAllReview).then(
-      (res) => {
-        this.AllReview = res;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.refresh();
   },
   activated() {
     console.log(this.$route.path);

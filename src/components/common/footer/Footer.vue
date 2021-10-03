@@ -1,12 +1,17 @@
 <template>
     <div class="footer">
-        <a href="#"><div class="exit">退出登录</div></a>
+        <a href="#"><div class="exit" @click="exit">退出登录</div></a>
     </div>
 </template>
 
 <script>
 export default {
-
+    methods:{
+        exit(){
+            localStorage.clear();
+            location.href="./index";
+        }
+    }
 }
 </script>
 

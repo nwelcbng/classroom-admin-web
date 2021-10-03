@@ -8,6 +8,7 @@
         @showDetail="showDetail"
         @HomeSearch="search"
         @HomeDelete="HomeDelete"
+        @refresh="refresh"
         type="aid"
         v-show="show"
         :loading="show"
@@ -155,19 +156,22 @@ export default {
         }
       );
     },
-    handleCurrentChange(val){
+    handleCurrentChange(val) {
       this.pageNow = val;
-    }
+    },
+    refresh() {
+      fomatNetwork.call(this, getAllUsers).then(
+        (res) => {
+          this.AllUsers = res;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
   },
   created() {
-    fomatNetwork.call(this, getAllUsers).then(
-      (res) => {
-        this.AllUsers = res;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.refresh();
   },
   activated() {},
 };
