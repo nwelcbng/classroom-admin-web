@@ -1,6 +1,9 @@
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/'
+    : '/',
   pages: {
-    login: {
+    'login': {
       // page 的入口
       entry: "src/views/login/main.js",
       // 模板来源
@@ -14,7 +17,7 @@ module.exports = {
       // 提取出来的通用 chunk 和 vendor chunk。
       // chunks: ["chunk-vendors", "chunk-common", "ui"]
     },
-    admin: {
+    'admin': {
       // page 的入口
       entry: "src/views/admin/main.js",
       // 模板来源

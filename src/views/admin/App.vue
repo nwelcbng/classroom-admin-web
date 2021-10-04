@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="main-app">
     <el-aside id="side">
       <HomeUserInfo />
       <HomeOptions @toPage="goTo" />
