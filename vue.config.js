@@ -33,5 +33,21 @@ module.exports = {
     // 并且如果找不到的话，就回退到 `public/index.html`
     // 输出文件名会被推导为 `subpage.html`。
     //   subpage: "src/subpage/main.js"
+  },
+  devServer: {
+    open: true, //是否自动弹出浏览器页面
+    host: "localhost",
+    port: '8081',
+    https: true,
+    hotOnly: false,
+    proxy: {
+      '/abc': {
+        target: 'https://www.ximple.icu/api', //API服务器的地址
+        changeOrigin: true,
+        pathRewrite: {
+          '^/abc': ''
+        }
+      }
+    },
   }
 };

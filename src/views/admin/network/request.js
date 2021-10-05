@@ -1,8 +1,10 @@
 import Axios from "axios";
 
+Axios.defaults.baseURL = '/abc'
+
 export function request(config) {
     const instance = Axios.create({
-        baseURL:'https://www.ximple.icu/api',
+        // baseURL:'https://www.ximple.icu/api',
         timeout: 10000
     })
     instance.interceptors.request.use(config => {

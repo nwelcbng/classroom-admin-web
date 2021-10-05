@@ -8,7 +8,7 @@
         @showDetail="showDetail"
         @HomeDelete="HomeDelete"
         @refresh="refresh"
-        :hasSearch="true"
+        :hasSearch="false"
         type="cid"
         v-show="show"
         :loading="show"
