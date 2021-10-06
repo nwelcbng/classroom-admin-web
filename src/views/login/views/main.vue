@@ -7,6 +7,7 @@
         placeholder="请输入账号"
       ></el-input>
       <el-input
+        type="password"
         style="margin-top: 30px"
         maxlength="20"
         v-model="password"
@@ -64,9 +65,6 @@ export default {
           console.log(err);
           this.loading = false;
           this.$message("网络繁忙");
-        })
-        .finally(() => {
-          console.log(localStorage.getItem("token"));
         });
     },
   },
