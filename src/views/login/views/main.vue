@@ -53,7 +53,7 @@ export default {
             this.$message("登录成功");
             localStorage.setItem("username", this.username);
             setTimeout(() => {
-              location.href = "./admin";
+              location.href = "/admin";
             }, 1000);
           } else {
             localStorage.clear(token);

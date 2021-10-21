@@ -147,6 +147,7 @@ export default {
       this.$refs.addToast.show = true;
     },
     addConfirm(data) {
+      console.log(data)
       this.$notify({
         title: "提示信息",
         message: "发布中",
@@ -156,7 +157,7 @@ export default {
         .call(this, addNews, qs.stringify(data))
         .then((res) => {
           data.aid = res;
-          this.Allnews.push(data);
+          this.Allnews.push(JSON.parse(JSON.stringify(data)));
           this.$notify({
             title: "操作结果",
             message: "发布成功",
